@@ -1,5 +1,17 @@
 {
   "dependencies": {
+    "com.kybernetik.inspector-gadgets": {
+      "version": "file:com.kybernetik.inspector-gadgets",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.kybernetik.ultevents": {
+      "version": "file:com.kybernetik.ultevents",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.addressables": {
       "version": "1.21.21",
       "depth": 0,
@@ -59,6 +71,13 @@
     "com.unity.mathematics": {
       "version": "1.2.6",
       "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"

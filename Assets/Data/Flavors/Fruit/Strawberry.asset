@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8492d0890cdc94e96740e9084a201e, type: 3}
   m_Name: Strawberry
   m_EditorClassIdentifier: 
-  color: {r: 0, g: 0, b: 0, a: 0}
+  color: {r: 0.7207546, g: 0.12919179, b: 0.12919179, a: 0}
   prefab: {fileID: 0}

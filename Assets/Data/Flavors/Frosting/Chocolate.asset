@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c926eac22749049be695b66dfc7338, type: 3}
   m_Name: Chocolate
   m_EditorClassIdentifier: 
-  color: {r: 0, g: 0, b: 0, a: 0}
+  color: {r: 0.3132075, g: 0.19915527, b: 0.058504775, a: 0}

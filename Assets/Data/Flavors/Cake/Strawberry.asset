@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43a97103eff5d840ab487ceb2796201, type: 3}
   m_Name: Strawberry
   m_EditorClassIdentifier: 
-  color: {r: 0, g: 0, b: 0, a: 0}
+  color: {r: 1, g: 0.7150943, b: 0.7150943, a: 0}

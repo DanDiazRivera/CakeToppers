@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8492d0890cdc94e96740e9084a201e, type: 3}
   m_Name: Peach
   m_EditorClassIdentifier: 
-  color: {r: 0, g: 0, b: 0, a: 0}
+  color: {r: 0.6754716, g: 0.5057591, b: 0.2689141, a: 0}
   prefab: {fileID: 0}

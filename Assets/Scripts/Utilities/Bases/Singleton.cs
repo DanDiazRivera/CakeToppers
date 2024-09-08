@@ -1,5 +1,11 @@
+#define HasAddressables
+
+using System;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using static UnityEditor.AddressableAssets.Build.BuildPipelineTasks.GenerateLocationListsTask;
+using Object = UnityEngine.Object;
 
 /// <summary>
 /// A type of Behavior that can only exist once in a scene.
@@ -7,53 +13,82 @@ using UnityEngine.AddressableAssets;
 /// <typeparam name="T">The Behavior's Type</typeparam>
 public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {
-	private static T _Instance;
+	private static T _instance;
+
 	public static T instance => Get();
-	public static T i => Get();
 	public static T I => Get();
 
-	public static T Get(bool createIfNone = false)
+	public static T Get() => InitFind();
+
+
+	protected static bool AttemptFind(out T result)
 	{
-		if (_Instance == null)
+		T findAttempt = FindFirstObjectByType<T>();
+		if (findAttempt)
 		{
-			T findAttempt = FindFirstObjectByType<T>();
-			if (findAttempt)
-			{
-				findAttempt.Awake();
-				return findAttempt;
-			}
-			else
-			{
-				if (createIfNone)
-				{
-					Create(new(typeof(T).ToString()));
-					return _Instance;
-				}
-				Debug.LogWarning("There's no Singleton of that type in this scene.");
-				return null;
-			}
+			result = findAttempt;
+			_instance = result;
+
+			_instance.Awake();
+			return true;
 		}
-		else return _Instance;
+		else
+		{
+			result = null;
+			return false;
+		}
 	}
 
-	public static T Get(ref T item, bool createIfNone = false)
+	protected static T InitFind()
 	{
-		if (item == null) item = Get(createIfNone);
-		return item;
+		if (_instance != null) return _instance;
+		if (AttemptFind(out T attempt)) return attempt;
+
+		Debug.LogError("No Singleton of type" + nameof(T) + "could be found.");
+		return null;
 	}
 
-	public static T Get() => Get(false);
-	public static T Get(ref T item) => Get(ref item, false);
+	protected static T InitCreate(bool dontDestroyOnLoad = false, string name = null)
+	{
+		if (_instance != null) return _instance;
+		if (AttemptFind(out T attempt)) return attempt;
 
-	public static T GetOrCreate() => Get(true);
-	public static T GetOrCreate(ref T item) => Get(ref item, true);
+		GameObject GO = new(name??typeof(T).ToString());
+		T result = GO.AddComponent<T>();
+		_instance = result;
+		if(dontDestroyOnLoad) DontDestroyOnLoad(result.gameObject);
+		
+		_instance.Awake();
+		return result;
+	}
+
+#if HasAddressables
+	protected static T InitInstantiate(string path)
+	{
+		if (_instance != null) return _instance;
+		if (AttemptFind(out T attempt)) return attempt;
+
+		GameObject result = Instantiate(UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>(path).WaitForCompletion());
+		_instance = result.GetComponent<T>();
+		
+		_instance.Awake();
+		return _instance;
+	}
+	#endif
+
+	public static bool TryGet(out T output)
+	{
+		output = Get();
+		return output != null;
+	}
+
 
 	/// <summary>
 	/// This is the Unity Function which runs some code necessary for Singleton Function. Use OnAwake() instead.
 	/// </summary>
 	public void Awake()
 	{
-		if (_Instance && _Instance != this)
+		if (_instance && _instance != this)
 		{
 			Debug.LogError(
 				"Something or someone is attempting to create a second " +
@@ -69,7 +104,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 		}
 		else
 		{
-			_Instance = (T)this;
+			_instance = (T)this;
 			OnAwake();
 			//Debug.Log(
 			//    "The " +
@@ -86,9 +121,9 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 	/// </summary>
 	private void OnDestroy()
 	{
-		if (_Instance == this)
+		if (_instance == this)
 		{
-			_Instance = null;
+			_instance = null;
 		}
 		OnDestroyed();
 	}
@@ -100,27 +135,38 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 	/// <param name="leaveGameObject"> Whether the Game Object that contains the Singleton is left behind.</param>
 	public static void Destroy(bool leaveGameObject = false)
 	{
-		if (instance == null) return;
+		if (_instance == null) return;
 		if (!leaveGameObject)
 		{
-			MonoBehaviour.Destroy(instance.gameObject);
+			Object.Destroy(_instance.gameObject);
 		}
 		else
 		{
-			Object.Destroy(instance);
-			instance.OnDestroy();
+			Object.Destroy(_instance);
+			_instance.OnDestroy();
 		}
 	}
 
 	/// <summary>
 	/// Very Dangerous. Do not use if you don't know what you're doing.
 	/// </summary>
-	public void Reset()
+	public void Reset(bool ResetWholeGameObject)
 	{
-		GameObject obj = _Instance.gameObject;
-		Destroy(true);
-		Create(obj);
+		if(ResetWholeGameObject)
+		{
+			GameObject obj = _instance.gameObject;
+			Destroy(true);
+			obj.AddComponent<T>();
+		}
+		else
+		{
+			Destroy(false);
+			Get();
+		}
+		
 	}
+
+	/*
 
 	/// <summary>
 	/// Creates an instance of this singleton and attaches it to the desired Game Object.
@@ -130,7 +176,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 	public static T Create(GameObject @object, bool replace = false)
 	{
 		if (!replace)
-			if (instance != null) return null;
+			if (_instance != null) return null;
 			else Destroy(true);
 		T result = @object.AddComponent<T>();
 		result.Awake();
@@ -155,5 +201,6 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 		 };
 	}
 #endif
+	 */
 
 }

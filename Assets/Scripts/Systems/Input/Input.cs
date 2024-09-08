@@ -1,36 +1,44 @@
 using System;
 using UnityEngine.InputSystem.EnhancedTouch;
-using Vector2 = UnityEngine.Vector2;
 using Button = UnityEngine.InputSystem.InputAction;
+using Vector2 = UnityEngine.Vector2;
 
-public class Input : Staticon<Input>
+public class Input : Singleton<Input>
 {
+	
+	public static new Input Get() => InitCreate(true);
+	public static new bool TryGet(out Input output)
+	{
+		output = Get();
+		return output != null;
+	}
+	
 
 	public InputActions asset;
 
-	public static Vector2 Position = Get().asset.Controls.Position.ReadValue<Vector2>();
-	public static Button Press = Get().asset.Controls.Press;
-	public static Button Tap = Get().asset.Controls.Tap;
-	public static Button DeepTap = Get().asset.Controls.DeepTap;
-	public static int TapCount = Get().asset.Controls.TapCount.ReadValue<int>();
-	public static float PressStartTime = Get().asset.Controls.PressStartTime.ReadValue<float>();
-	public static Touch TouchData = Get().asset.Controls.TouchData.ReadValue<Touch>();
-	public static Button Hold = Get().asset.Controls.Hold;
-	private DragControl _Drag = new();
-	public static DragControl Drag = Get()._Drag;
+	public static Vector2 Position => Get().asset.Controls.Position.ReadValue<Vector2>();
+	public static Button Press => Get().asset.Controls.Press;
+	public static Button Tap => Get().asset.Controls.Tap;
+	public static Button DeepTap => Get().asset.Controls.DeepTap;
+	public static int TapCount => Get().asset.Controls.TapCount.ReadValue<int>();
+	public static float PressStartTime => Get().asset.Controls.PressStartTime.ReadValue<float>();
+	public static Touch TouchData => Get().asset.Controls.TouchData.ReadValue<Touch>();
+	public static Button Hold => Get().asset.Controls.Hold;
+	private DragControl _Drag;
+	public static DragControl Drag => Get()._Drag;
 
 	private bool holding;
 
-	public static bool IsPressed = Get().asset.Controls.Press.IsPressed();
-	public static bool WasPressedThisFrame = Get().asset.Controls.Press.WasPressedThisFrame();
-	public static bool WasReleasedThisFrame = Get().asset.Controls.Press.WasReleasedThisFrame();
-	public static bool WasTappedThisFrame = Get().asset.Controls.Tap.WasPerformedThisFrame();
-	public static bool WasDeepTappedThisFrame = Get().asset.Controls.DeepTap.WasPerformedThisFrame();
-	public static bool IsHeld = Get().asset.Controls.Hold.IsPressed();
-	public static bool IsDragged = Drag.Dragging;
+	public static bool IsPressed => Get().asset.Controls.Press.IsPressed();
+	public static bool WasPressedThisFrame => Get().asset.Controls.Press.WasPressedThisFrame();
+	public static bool WasReleasedThisFrame => Get().asset.Controls.Press.WasReleasedThisFrame();
+	public static bool WasTappedThisFrame => Get().asset.Controls.Tap.WasPerformedThisFrame();
+	public static bool WasDeepTappedThisFrame => Get().asset.Controls.DeepTap.WasPerformedThisFrame();
+	public static bool IsHeld => Get().asset.Controls.Hold.IsPressed();
+	public static bool IsDragged => Get()._Drag.Dragging;
 
 
-	public override void Awake()
+	protected override void OnAwake()
 	{
 		asset = new();
 		asset.Enable();
@@ -41,6 +49,7 @@ public class Input : Staticon<Input>
 
 	private void DragInit()
 	{
+		_Drag = new();
 		asset.Controls.Hold.performed += _ =>
 		{
 			_Drag.StartPosition = asset.Controls.StartPosition.ReadValue<Vector2>();
@@ -52,11 +61,12 @@ public class Input : Staticon<Input>
 			if (_Drag.Dragging)
 			{
 				_Drag.Dragging = false;
-				_Drag.Ended(_Drag);
+				_Drag.Ended?.Invoke(_Drag);
 			}
 		};
 	}
 
+	[Serializable]
 	public class DragControl
 	{
 		public bool Dragging;
@@ -72,24 +82,25 @@ public class Input : Staticon<Input>
 		public Action<DragControl> Ended;
 
 	}
-
+	
 	//NOTE: Unity Function, refactor Input class into normal singleton later to make work.
 	private void Update()
 	{
-		
+
 		if (holding)
 		{
 			_Drag.LastPosition = asset.Controls.Position.ReadValue<Vector2>();
 			if (_Drag.Dragging)
 			{
-				_Drag.Active(_Drag);
+				_Drag.Active?.Invoke(_Drag);
 			}
 			else if (_Drag.Distance > DragControl.minDifference)
 			{
 				_Drag.Dragging = true;
-				_Drag.Started(_Drag);
+				_Drag.Started?.Invoke(_Drag);
 			}
 		}
 	}
-
+	 
+	
 }

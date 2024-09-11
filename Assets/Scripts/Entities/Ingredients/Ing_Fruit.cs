@@ -10,11 +10,13 @@ public class Ing_Fruit : Ingredient
 
 	private void Awake()
 	{
-		color = flavor.color;
-		model = Instantiate(flavor.prefab);
+		//UpdateFlavor();
+		
 	}
 
+	public override void UpdateFlavor()
+	{
 
-
+	}
 
 }

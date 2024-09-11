@@ -6,5 +6,5 @@ public class D_Cake : Desert
 {
 	public Ing_CakeBase cakeBase;
 	public Ing_Frosting_Cover frostingCover;
-	public Ing_Fruit[] fruits;
+	public List<Ing_Fruit> fruits;
 }

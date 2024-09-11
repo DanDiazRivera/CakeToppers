@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MI_StylizedShaderTest
+  m_Name: MI_StylizedShaderTest 1
   m_Shader: {fileID: -6465566751694194690, guid: db13a7a8c1bd4d3459d2649bf904475c,
     type: 3}
   m_Parent: {fileID: 0}
@@ -131,8 +131,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _maxBrightness: 1.48
-    - _minBrightness: 0.27
-    - _shaderBias: 0.24
+    - _minBrightness: 0.45
+    - _shaderBias: 0.3
     - _shades: 0.49
     - _test: 0.43
     m_Colors:
@@ -140,5 +140,5 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _colorOverlay: {r: 1, g: 0.7971698, b: 0.9297895, a: 0}
+    - _colorOverlay: {r: 0.7924528, g: 0.1981132, b: 0.27334315, a: 0}
   m_BuildTextureStacks: []

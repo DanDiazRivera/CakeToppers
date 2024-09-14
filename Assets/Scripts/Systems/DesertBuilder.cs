@@ -76,7 +76,7 @@ public class DesertBuilder : MonoBehaviour
 	public void SubmitDesert()
 	{
 		if (cake == null) return;
-		OrderManager.Get().SubmitDesert();
+		OrderManager.Get().SubmitDesert(cake);
 		ClearCurrentDesert();
 	}
 

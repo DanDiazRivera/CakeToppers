@@ -16,6 +16,7 @@ public class LevelManager : Singleton<LevelManager>
 	[SerializeField] GameObject levelEndCanvas;
 	[SerializeField] GameObject winDialogue;
 	[SerializeField] GameObject loseDialogue;
+	[SerializeField] GameObject pauseCanvas;
 	[SerializeField] TextMP currentTimerText;
 	[SerializeField] TextMP currentScoreText;
 
@@ -26,6 +27,8 @@ public class LevelManager : Singleton<LevelManager>
 	float currentLevelTime;
 	[SerializeField, ReadOnly]
 	float currentScore;
+
+	private bool paused;
 
 	#endregion
 
@@ -38,11 +41,12 @@ public class LevelManager : Singleton<LevelManager>
 		Input.Get();
 		currentLevelTime = levelTime;
 		currentScore = 0;
-		currentScoreText.text = currentScore.ToString();
+		AddScore(0);
 	}
 
 	void Update()
 	{
+		if(paused) return;
 		if (currentLevelTime <= 0) return;
 		currentLevelTime -= Time.deltaTime;
 		if (currentLevelTime <= 0) EndLevel();
@@ -58,7 +62,13 @@ public class LevelManager : Singleton<LevelManager>
 	public void AddScore(int score)
 	{
 		currentScore += score;
-		currentScoreText.text = currentScore.ToString();
+		currentScoreText.text = currentScore.ToString() + "\n/" + minWinScore.ToString();
+	}
+
+	public void SetPause(bool value)
+	{
+		paused = value;
+		pauseCanvas.SetActive(value);
 	}
 
 }

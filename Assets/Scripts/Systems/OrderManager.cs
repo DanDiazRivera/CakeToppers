@@ -58,16 +58,46 @@ public class OrderManager : Singleton<OrderManager>
 	}
 
 
-	public void SubmitDesert()
+	public void SubmitDesert(D_Cake input)
 	{
-		LevelManager.Get().AddScore(100);
+		int score = CompareCakes(input, currentOrder);
+		LevelManager.Get().AddScore(score);
 		Destroy(currentOrder.gameObject);
 		RandomizeDesert();
 	}
 
-	protected override void OnDestroyed()
+	private int CompareCakes(D_Cake playerCake, D_Cake orderCake)
 	{
+		if (playerCake.cakeBase == null) return 0;
+		int finalScore = 0;
 
+		if (playerCake.cakeBase.flavor == orderCake.cakeBase.flavor) finalScore += 50;
+		else finalScore += 5;
+
+		if (playerCake.frostingCover == null) finalScore += 0;
+		else if (playerCake.frostingCover.flavor == orderCake.frostingCover.flavor) finalScore += 50;
+		else finalScore += 10;
+
+		if (playerCake.fruits.Count < 1) finalScore += 0;
+		else
+		{
+			finalScore += 10;
+
+			Vector2 inputStrawbPos = new (playerCake.fruits[0].transform.localPosition.x, playerCake.fruits[0].transform.localPosition.z);
+			Vector2 orderStrawbPos = new(orderCake.fruits[0].transform.localPosition.x, orderCake.fruits[0].transform.localPosition.z);
+
+			float distance = Vector2.Distance(inputStrawbPos, orderStrawbPos);
+
+			finalScore += distance switch
+			{
+				< 0.2192031f => 50,
+				< 0.4384062f => 25,
+				_ => 0
+			};
+
+			finalScore += playerCake.fruits.Count - 1;
+		}
+			
+		return finalScore;
 	}
-
 }

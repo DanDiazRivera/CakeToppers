@@ -133,7 +133,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 	/// Destroys the instance of this singleton, wherever it is.
 	/// </summary>
 	/// <param name="leaveGameObject"> Whether the Game Object that contains the Singleton is left behind.</param>
-	public static void Destroy(bool leaveGameObject = false)
+	public static void DestroyS(bool leaveGameObject = false)
 	{
 		if (_instance == null) return;
 		if (!leaveGameObject)
@@ -155,12 +155,12 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 		if(ResetWholeGameObject)
 		{
 			GameObject obj = _instance.gameObject;
-			Destroy(true);
+			DestroyS(true);
 			obj.AddComponent<T>();
 		}
 		else
 		{
-			Destroy(false);
+			DestroyS(false);
 			Get();
 		}
 		

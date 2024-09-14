@@ -31,11 +31,7 @@ public class DesertBuilder : MonoBehaviour
 
 	private void BeginCake()
 	{
-		cake = new GameObject("Cake", typeof(D_Cake)).GetComponent<D_Cake>();
-		cake.transform.parent = transform;
-		cake.transform.localPosition = Vector3.zero;
-		cake.transform.localRotation = Quaternion.identity;
-		cake.transform.localScale = Vector3.one * 4;
+		cake = D_Cake.Create(transform);
 		phase = 0;
 	}
 
@@ -79,6 +75,7 @@ public class DesertBuilder : MonoBehaviour
 
 	public void SubmitDesert()
 	{
+		if (cake == null) return;
 		OrderManager.Get().SubmitDesert();
 		ClearCurrentDesert();
 	}

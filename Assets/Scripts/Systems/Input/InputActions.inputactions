@@ -110,6 +110,17 @@
                 },
                 {
                     "name": "",
+                    "id": "386bd85f-eed7-4f8b-aba5-bc5d0f24a28d",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8f087d4d-59ac-4189-a11e-c5d7e995c59a",
                     "path": "<Touchscreen>/primaryTouch/delta",
                     "interactions": "",
@@ -132,9 +143,31 @@
                 },
                 {
                     "name": "",
+                    "id": "140d9a53-eba3-44b7-b5ab-85c00f2c72c4",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8fcc267b-264d-4a68-b6c8-92179513d6b6",
                     "path": "<Touchscreen>/primaryTouch/tap",
                     "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "057978bc-f710-4689-a685-008aedad4ac8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Tap",
                     "processors": "",
                     "groups": "",
                     "action": "Tap",

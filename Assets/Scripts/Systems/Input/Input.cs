@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Button = UnityEngine.InputSystem.InputAction;
 using Vector2 = UnityEngine.Vector2;
@@ -43,6 +44,7 @@ public class Input : Singleton<Input>
 		asset = new();
 		asset.Enable();
 		TouchSimulation.Enable();
+		CheckForDebugTouchSim();
 
 		DragInit();
 	}
@@ -102,5 +104,10 @@ public class Input : Singleton<Input>
 		}
 	}
 	 
-	
+	void CheckForDebugTouchSim()
+	{
+#if UNITY_EDITOR
+		UnityEngine.Debug.Log("Make sure Debug Simulated Touchscreen is active. Go to Window/Analysis/Input Debugger, click on Options, and click \"Simulate Touch Input From Mouse or Pen\"");
+#endif
+	}
 }

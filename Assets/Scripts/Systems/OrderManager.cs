@@ -29,7 +29,7 @@ public class OrderManager : Singleton<OrderManager>
 			Destroy(currentOrder.gameObject);
 			currentOrder = null;
 		}
-		currentOrder = D_Cake.Create(transform);
+		currentOrder = Desert.Create<D_Cake>(transform);
 
 
 		currentOrder.cakeBase = Instantiate(randoData.cakeBasePrefab, currentOrder.transform);

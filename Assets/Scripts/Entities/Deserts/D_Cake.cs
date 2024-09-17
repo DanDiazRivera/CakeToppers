@@ -10,18 +10,27 @@ public class D_Cake : Desert
 
 	private void Awake() => fruits = new List<Ing_Fruit>();
 
-
-
-	public static D_Cake Create(Transform parent = null)
+	public override void AddIngredient(Ingredient ingredient, Vector3 position)
 	{
-		GameObject @object = new("Cake", typeof(D_Cake));
-		@object.TryGetComponent(out D_Cake final);
-		if(parent != null) @object.transform.parent = parent;
-		@object.transform.localPosition = Vector3.zero;
-		@object.transform.localRotation = Quaternion.identity;
-		@object.transform.localScale = Vector3.one * 4;
-		return final;
+		if(ingredient is Ing_CakeBase)
+		{
+			if (frostingCover) return;
+			SetIngredientSlot(ref cakeBase, ingredient.Instantiate(transform) as Ing_CakeBase);
+		}
+		else if(ingredient is Ing_Frosting_Cover)
+		{
+			if (fruits.Count > 0 || !cakeBase) return;
+			SetIngredientSlot(ref frostingCover, ingredient.Instantiate(transform) as Ing_Frosting_Cover);
+		}
+		else if(ingredient is Ing_Fruit)
+		{
+			if (!cakeBase || !frostingCover) return;
+			fruits.Add(ingredient.Instantiate(transform) as Ing_Fruit);
+			fruits[^1].transform.position = position;
+		}
 	}
+
+
 
 
 }

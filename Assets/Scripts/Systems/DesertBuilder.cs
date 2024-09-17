@@ -31,46 +31,8 @@ public class DesertBuilder : Singleton<DesertBuilder>
 
 	private void BeginCake()
 	{
-		cake = D_Cake.Create(transform);
+		cake = Desert.Create<D_Cake>(transform);
 		phase = 0;
-	}
-
-	public void InputIngredient(Ingredient ing) => InputIngredient(ing, null); 
-	public void InputIngredient(Ingredient ing, Vector3? pos)
-	{
-		if(phase < 2 && ing.GetType() == typeof(Ing_CakeBase))
-		{
-			if (cake.cakeBase != null) Destroy(cake.cakeBase.gameObject);
-			cake.cakeBase = (Ing_CakeBase)Instantiate(ing, cake.transform);
-			cake.cakeBase.gameObject.SetActive(true);
-			phase = 1;
-		}
-		else if(phase < 3 && ing.GetType() == typeof(Ing_Frosting_Cover))
-		{
-			if (cake.frostingCover != null) Destroy(cake.frostingCover.gameObject);
-			cake.frostingCover = (Ing_Frosting_Cover)Instantiate(ing, cake.transform);
-			cake.frostingCover.gameObject.SetActive(true);
-			phase = 2;
-		}
-		else if(phase > 1 && ing.GetType() == typeof(Ing_Fruit))
-		{
-			cake.fruits.Add((Ing_Fruit)Instantiate(ing, cake.transform)); 
-			cake.fruits[^1].transform.position = pos.Value;
-			cake.fruits[^1].gameObject.SetActive(true);
-			phase = 3;
-		}
-	}
-
-	public void AddStrawberry()
-	{
-		Ray raymond = Camera.main.ScreenPointToRay(Input.Position);
-		
-		if(Physics.Raycast(raymond, out RaycastHit hitInfo))
-		{
-			InputIngredient(strawberryPrefab, hitInfo.point);
-		}
-		
-		 
 	}
 
 	public void SubmitDesert()
@@ -89,14 +51,14 @@ public class DesertBuilder : Singleton<DesertBuilder>
 
 	public void ClickIngredient(Ingredient ingredient)
 	{
-		InputIngredient(ingredient);
+		cake.AddIngredient(ingredient, Vector3.zero);
 	}
 	public void DragIngredient(Ingredient ingredient, Vector2 pos)
 	{
 		Ray raymond = Camera.main.ScreenPointToRay(Input.Position);
 
 		if (Physics.Raycast(raymond, out RaycastHit hitInfo))
-			InputIngredient(ingredient, hitInfo.point);
+			cake.AddIngredient(ingredient, hitInfo.point);
 		
 	}
 

@@ -4,7 +4,7 @@ using EditorAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DesertBuilder : MonoBehaviour
+public class DesertBuilder : Singleton<DesertBuilder>
 {
 	#region Config
 	public Ing_CakeBase cakeBasePrefab;
@@ -24,7 +24,7 @@ public class DesertBuilder : MonoBehaviour
 
 	#endregion
 
-	private void Awake()
+	protected override void OnAwake()
 	{
 		BeginCake();
 	}
@@ -87,8 +87,18 @@ public class DesertBuilder : MonoBehaviour
 	}
 
 
+	public void ClickIngredient(Ingredient ingredient)
+	{
+		InputIngredient(ingredient);
+	}
+	public void DragIngredient(Ingredient ingredient, Vector2 pos)
+	{
+		Ray raymond = Camera.main.ScreenPointToRay(Input.Position);
 
-
+		if (Physics.Raycast(raymond, out RaycastHit hitInfo))
+			InputIngredient(ingredient, hitInfo.point);
+		
+	}
 
 
 

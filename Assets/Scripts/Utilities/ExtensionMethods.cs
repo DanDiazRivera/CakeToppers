@@ -108,6 +108,9 @@ public static class MonoBehaviorHelpers
 		if (scale) transform.localScale = Vector3.one;
 	}
 
+	public static T Random<T>(this T[] array) => array[UnityEngine.Random.Range(0, array.Length)];
+
+
 }
 
 public delegate void Delegate();

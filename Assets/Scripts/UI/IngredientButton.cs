@@ -8,7 +8,7 @@ public class IngredientButton : MonoBehaviour, IPointerClickHandler, IPointerDow
 {
 
 	public Ingredient ingredient;
-	public bool onlyDrag;
+	//public bool onlyDrag;
 
 	Input input;
 	ScrollRect scrollRect;
@@ -87,8 +87,8 @@ public class IngredientButton : MonoBehaviour, IPointerClickHandler, IPointerDow
 
 	private void IngredientClick()
 	{
-		if (onlyDrag) return;
-		DesertBuilder.Get().ClickIngredient(ingredient);
+		//if (onlyDrag) return;
+		DesertBuilder.Get().ClickIngredient(ingredient, this);
 	}
 
 	private void BeginIngredientDrag()
@@ -105,7 +105,16 @@ public class IngredientButton : MonoBehaviour, IPointerClickHandler, IPointerDow
 			return;
 		}
 		dragging = false;
-		DesertBuilder.Get().DragIngredient(ingredient, eventData.position);
+		DesertBuilder.Get().DragIngredient(ingredient, this);
 	}
 
+
+	public void BeginActiveMode()
+	{
+
+	}
+	public void EndActiveMode()
+	{
+
+	}
 }

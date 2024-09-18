@@ -6,18 +6,16 @@ public abstract class Desert : MonoBehaviour
 {
 
 
-	public static T Create<T>(Transform parent = null)
+	public static T Create<T>(string name = "NewDesert", Transform parent = null)
 	{
-		GameObject @object = new("Cake", typeof(T));
+		GameObject @object = new(name, typeof(T));
 		@object.TryGetComponent(out T final);
 		if (parent != null) @object.transform.parent = parent;
-		@object.transform.localPosition = Vector3.zero;
-		@object.transform.localRotation = Quaternion.identity;
-		@object.transform.localScale = Vector3.one * 4;
+		@object.transform.Reset();
 		return final;
 	}
 
-	public abstract void AddIngredient(Ingredient ingredient, Vector3 position);
+	public abstract Ingredient AddIngredient(Ingredient ingredient, Vector3 position);
 
 	protected void SetIngredientSlot<T>(ref T slot, T ing) where T : Ingredient
 	{

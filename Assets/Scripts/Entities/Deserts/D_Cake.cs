@@ -14,12 +14,14 @@ public class D_Cake : Desert
 	{
 		if(ingredient is Ing_CakeBase)
 		{
+			if (Ingredient.Compare(ingredient, cakeBase)) return null;
 			if (frostingCover) return null;
 			SetIngredientSlot(ref cakeBase, ingredient.Instantiate(transform) as Ing_CakeBase);
 			return cakeBase;
 		}
 		else if(ingredient is Ing_Frosting_Cover)
 		{
+			if (Ingredient.Compare(ingredient, frostingCover)) return null;
 			if (fruits.Count > 0 || !cakeBase) return null;
 			SetIngredientSlot(ref frostingCover, ingredient.Instantiate(transform) as Ing_Frosting_Cover);
 			return frostingCover;

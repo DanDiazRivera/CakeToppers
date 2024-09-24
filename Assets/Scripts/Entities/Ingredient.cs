@@ -7,6 +7,7 @@ public abstract class Ingredient : MonoBehaviour
 {
 
 	public string signature;
+	public AnimationClip placeAnimation;
 
 	public static bool Compare(Ingredient A, Ingredient B)
 	{

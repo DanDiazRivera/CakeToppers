@@ -4,6 +4,7 @@ using EditorAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
 public class DesertBuilder : Singleton<DesertBuilder>
 {
 	#region Config
@@ -11,6 +12,8 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	//public Ing_Frosting_Cover frostingPrefab;
 	//public Ing_Fruit strawberryPrefab;
 	public LayerMask stationLayerMask;
+	public RuntimeAnimatorController ingredientPlaceController;
+
 
 	#endregion
 	#region Components
@@ -21,7 +24,7 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	#endregion
 	#region Data
 
-	Plane plane = new (Vector3.up, Vector3.zero);
+	Plane plane = new(Vector3.up, Vector3.zero);
 	Vector3 cursorPosition;
 	private int mode; // 0 = Normal, 1 = Multi Object Placement, 2 = Drawing
 	private Ingredient activeModeIngredient;
@@ -35,10 +38,7 @@ public class DesertBuilder : Singleton<DesertBuilder>
 		Input.Tap.performed += _ => Tap();
 	}
 
-	private void BeginCake()
-	{
-		cake = Desert.Create<D_Cake>("New Cake", transform);
-	}
+	private void BeginCake() => cake = Desert.Create<D_Cake>("New Cake", transform);
 
 	public void SubmitDesert()
 	{
@@ -70,19 +70,19 @@ public class DesertBuilder : Singleton<DesertBuilder>
 
 	public void ClickIngredient(Ingredient ingredient, IngredientButton button)
 	{
-		if(ingredient is IStaticIngredient) cake.AddIngredient(ingredient, Vector3.zero);
+		if (ingredient is IStaticIngredient) AddIngredient(ingredient, Vector3.zero);
 		else if (ingredient is IObjectIngredient) BeginActiveMode(ingredient, button);
 		else if (ingredient is IPaintIngredient) BeginActiveMode(ingredient, button);
-		else cake.AddIngredient(ingredient, Vector3.zero);
+		else AddIngredient(ingredient, Vector3.zero);
 	}
 	public void DragIngredient(Ingredient ingredient, IngredientButton button)
 	{
 		if (!GetMousePosition()) return;
 
-		if (ingredient is IStaticIngredient) cake.AddIngredient(ingredient, Vector3.zero);
-		else if (ingredient is IObjectIngredient) cake.AddIngredient(ingredient, cursorPosition);
+		if (ingredient is IStaticIngredient) AddIngredient(ingredient, Vector3.zero);
+		else if (ingredient is IObjectIngredient) AddIngredient(ingredient, cursorPosition);
 		else if (ingredient is IPaintIngredient) BeginActiveMode(ingredient, button);
-		else cake.AddIngredient(ingredient, Vector3.zero);
+		else AddIngredient(ingredient, Vector3.zero);
 	}
 
 	void BeginActiveMode(Ingredient ingredient, IngredientButton button)
@@ -95,7 +95,7 @@ public class DesertBuilder : Singleton<DesertBuilder>
 		if (ingredient is IPaintIngredient)
 		{
 			mode = 2;
-			activeModeIngredient = cake.AddIngredient(ingredient, Vector3.zero);
+			activeModeIngredient = AddIngredient(ingredient, Vector3.zero);
 			if (activeModeIngredient == null) EndActiveMode();
 
 			//////////////////////////////////////////PUT FUNCTIONALITY FOR PAINT INGREDIENTS HERE.//////////////////////////////////////////
@@ -105,12 +105,10 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	void EndActiveMode()
 	{
 		activeModeIngredient = null;
-		if(activeModeIngredientButton)activeModeIngredientButton.EndActiveMode();
+		if (activeModeIngredientButton) activeModeIngredientButton.EndActiveMode();
 		activeModeIngredientButton = null;
 
 	}
-
-
 
 	void Tap()
 	{
@@ -122,11 +120,34 @@ public class DesertBuilder : Singleton<DesertBuilder>
 		}
 
 		if (mode == 1 && activeModeIngredient is IObjectIngredient)
-			if (cake.AddIngredient(activeModeIngredient, cursorPosition) == null) 
+			if (AddIngredient(activeModeIngredient, cursorPosition) == null)
 				EndActiveMode();
 	}
 
-
+	private Ingredient AddIngredient(Ingredient ingredient, Vector3 position)
+	{
+		Ingredient NewIngredient = cake.AddIngredient(ingredient, position);
+		if (NewIngredient)
+		{
+			if (NewIngredient.placeAnimation)
+			{
+				/* // Legacy Animation Solution.
+				Animation anim = NewIngredient.gameObject.AddComponent<Animation>();
+				anim.AddClip(NewIngredient.placeAnimation, "Place");
+				anim.Play("Place");
+				Destroy(anim, NewIngredient.placeAnimation.length);
+				 */
+				//Modern Animator Solution.
+				Animator anim = NewIngredient.gameObject.AddComponent<Animator>();
+				anim.runtimeAnimatorController = ingredientPlaceController;
+				(anim.runtimeAnimatorController as AnimatorOverrideController)["IngBaseAnim"] = NewIngredient.placeAnimation;
+				anim.Play("Place");
+				Destroy(anim, NewIngredient.placeAnimation.length);
+			}
+			return NewIngredient;
+		}
+		return null;
+	}
 
 
 

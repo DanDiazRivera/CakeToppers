@@ -103,13 +103,9 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 		}
 		else
 		{
+			if (_instance == this) return;
 			_instance = (T)this;
 			OnAwake();
-			//Debug.Log(
-			//    "The " +
-			//    typeof(T).ToString() +
-			//    " Singleton has been successfully Created/Reset."
-			//    );
 		}
 	}
 

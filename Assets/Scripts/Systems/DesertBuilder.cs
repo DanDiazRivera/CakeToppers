@@ -4,12 +4,16 @@ using EditorAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DesertBuilder : MonoBehaviour
+
+public class DesertBuilder : Singleton<DesertBuilder>
 {
 	#region Config
-	public Ing_CakeBase cakeBasePrefab;
-	public Ing_Frosting_Cover frostingPrefab;
-	public Ing_Fruit strawberryPrefab;
+	//public Ing_CakeBase cakeBasePrefab;
+	//public Ing_Frosting_Cover frostingPrefab;
+	//public Ing_Fruit strawberryPrefab;
+	public LayerMask stationLayerMask;
+	public RuntimeAnimatorController ingredientPlaceController;
+
 
 	#endregion
 	#region Components
@@ -20,58 +24,21 @@ public class DesertBuilder : MonoBehaviour
 	#endregion
 	#region Data
 
-	private int phase = 0;
+	Plane plane = new(Vector3.up, Vector3.zero);
+	Vector3 cursorPosition;
+	private int mode; // 0 = Normal, 1 = Multi Object Placement, 2 = Drawing
+	private Ingredient activeModeIngredient;
+	private IngredientButton activeModeIngredientButton;
 
 	#endregion
 
-	private void Awake()
+	protected override void OnAwake()
 	{
 		BeginCake();
+		Input.Tap.performed += _ => Tap();
 	}
 
-	private void BeginCake()
-	{
-		cake = D_Cake.Create(transform);
-		phase = 0;
-	}
-
-	public void InputIngredient(Ingredient ing) => InputIngredient(ing, null); 
-	public void InputIngredient(Ingredient ing, Vector3? pos)
-	{
-		if(phase < 2 && ing.GetType() == typeof(Ing_CakeBase))
-		{
-			if (cake.cakeBase != null) Destroy(cake.cakeBase.gameObject);
-			cake.cakeBase = (Ing_CakeBase)Instantiate(ing, cake.transform);
-			cake.cakeBase.gameObject.SetActive(true);
-			phase = 1;
-		}
-		else if(phase < 3 && ing.GetType() == typeof(Ing_Frosting_Cover))
-		{
-			if (cake.frostingCover != null) Destroy(cake.frostingCover.gameObject);
-			cake.frostingCover = (Ing_Frosting_Cover)Instantiate(ing, cake.transform);
-			cake.frostingCover.gameObject.SetActive(true);
-			phase = 2;
-		}
-		else if(phase > 1 && ing.GetType() == typeof(Ing_Fruit))
-		{
-			cake.fruits.Add((Ing_Fruit)Instantiate(ing, cake.transform)); 
-			cake.fruits[^1].transform.position = pos.Value;
-			cake.fruits[^1].gameObject.SetActive(true);
-			phase = 3;
-		}
-	}
-
-	public void AddStrawberry()
-	{
-		Ray raymond = Camera.main.ScreenPointToRay(Input.Position);
-		
-		if(Physics.Raycast(raymond, out RaycastHit hitInfo))
-		{
-			InputIngredient(strawberryPrefab, hitInfo.point);
-		}
-		
-		 
-	}
+	private void BeginCake() => cake = Desert.Create<D_Cake>("New Cake", transform);
 
 	public void SubmitDesert()
 	{
@@ -86,15 +53,101 @@ public class DesertBuilder : MonoBehaviour
 		BeginCake();
 	}
 
+	bool GetMousePosition()
+	{
+		Ray mouseRay = Camera.main.ScreenPointToRay(Input.Position);
+		if (Physics.Raycast(mouseRay, out RaycastHit hitInfo, 1000f, stationLayerMask))
+		{
+			cursorPosition = hitInfo.point;
+			return true;
+		}
+		else
+		{
+			cursorPosition = Vector3.zero;
+			return false;
+		}
+	}
 
+	public void ClickIngredient(Ingredient ingredient, IngredientButton button)
+	{
+		if (ingredient is IStaticIngredient) AddIngredient(ingredient, Vector3.zero);
+		else if (ingredient is IObjectIngredient) BeginActiveMode(ingredient, button);
+		else if (ingredient is IPaintIngredient) BeginActiveMode(ingredient, button);
+		else AddIngredient(ingredient, Vector3.zero);
+	}
+	public void DragIngredient(Ingredient ingredient, IngredientButton button)
+	{
+		if (!GetMousePosition()) return;
 
+		if (ingredient is IStaticIngredient) AddIngredient(ingredient, Vector3.zero);
+		else if (ingredient is IObjectIngredient) AddIngredient(ingredient, cursorPosition);
+		else if (ingredient is IPaintIngredient) BeginActiveMode(ingredient, button);
+		else AddIngredient(ingredient, Vector3.zero);
+	}
 
+	void BeginActiveMode(Ingredient ingredient, IngredientButton button)
+	{
+		activeModeIngredient = ingredient;
+		activeModeIngredientButton = button;
+		button.BeginActiveMode();
+		mode = 1;
 
+		if (ingredient is IPaintIngredient)
+		{
+			mode = 2;
+			activeModeIngredient = AddIngredient(ingredient, Vector3.zero);
+			if (activeModeIngredient == null) EndActiveMode();
 
+			//////////////////////////////////////////PUT FUNCTIONALITY FOR PAINT INGREDIENTS HERE.//////////////////////////////////////////
+		}
 
+	}
+	void EndActiveMode()
+	{
+		activeModeIngredient = null;
+		if (activeModeIngredientButton) activeModeIngredientButton.EndActiveMode();
+		activeModeIngredientButton = null;
 
+	}
 
+	void Tap()
+	{
+		if (mode == 0) return;
+		if (!GetMousePosition())
+		{
+			EndActiveMode();
+			return;
+		}
 
+		if (mode == 1 && activeModeIngredient is IObjectIngredient)
+			if (AddIngredient(activeModeIngredient, cursorPosition) == null)
+				EndActiveMode();
+	}
+
+	private Ingredient AddIngredient(Ingredient ingredient, Vector3 position)
+	{
+		Ingredient NewIngredient = cake.AddIngredient(ingredient, position);
+		if (NewIngredient)
+		{
+			if (NewIngredient.placeAnimation)
+			{
+				/* // Legacy Animation Solution.
+				Animation anim = NewIngredient.gameObject.AddComponent<Animation>();
+				anim.AddClip(NewIngredient.placeAnimation, "Place");
+				anim.Play("Place");
+				Destroy(anim, NewIngredient.placeAnimation.length);
+				 */
+				//Modern Animator Solution.
+				Animator anim = NewIngredient.gameObject.AddComponent<Animator>();
+				anim.runtimeAnimatorController = ingredientPlaceController;
+				(anim.runtimeAnimatorController as AnimatorOverrideController)["IngBaseAnim"] = NewIngredient.placeAnimation;
+				anim.Play("Place");
+				Destroy(anim, NewIngredient.placeAnimation.length);
+			}
+			return NewIngredient;
+		}
+		return null;
+	}
 
 
 

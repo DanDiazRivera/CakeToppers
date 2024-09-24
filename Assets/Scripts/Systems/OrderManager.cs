@@ -10,12 +10,9 @@ public class OrderManager : Singleton<OrderManager>
 	[SerializeField] private RandomizerData randoData;
 	[System.Serializable] private struct RandomizerData
 	{
-		public Ing_CakeBase cakeBasePrefab;
-		public Ing_Frosting_Cover frostingPrefab;
-		public Ing_Fruit strawberryPrefab;
-
-		public Fla_Cake[] cakeFlavors;
-		public Fla_Frosting[] frostingFlavors;
+		public Ing_CakeBase[] cakeBaseOptions;
+		public Ing_Frosting_Cover[] frostingCoverOptions;
+		public Ing_Fruit[] fruitOptions;
 	}
 
 
@@ -29,30 +26,9 @@ public class OrderManager : Singleton<OrderManager>
 			Destroy(currentOrder.gameObject);
 			currentOrder = null;
 		}
-		currentOrder = D_Cake.Create(transform);
-
-
-		currentOrder.cakeBase = Instantiate(randoData.cakeBasePrefab, currentOrder.transform);
-		currentOrder.cakeBase.gameObject.SetActive(true);
-		int flavor = Random.Range(0, randoData.cakeFlavors.Length);
-		currentOrder.cakeBase.flavor = randoData.cakeFlavors[flavor];
-		currentOrder.cakeBase.UpdateFlavor();
-
-		currentOrder.frostingCover = Instantiate(randoData.frostingPrefab, currentOrder.transform);
-		currentOrder.frostingCover.gameObject.SetActive(true);
-		flavor = Random.Range(0, randoData.frostingFlavors.Length);
-		currentOrder.frostingCover.flavor = randoData.frostingFlavors[flavor];
-		currentOrder.frostingCover.UpdateFlavor();
-
-		currentOrder.fruits.Add(Instantiate(randoData.strawberryPrefab, currentOrder.transform));
-		Ing_Fruit fruit = currentOrder.fruits[^1];
-		fruit.gameObject.SetActive(true);
-
-		float randoX = Random.Range(-0.4f, 0.4f);
-		float randoZ = Random.Range(-0.4f, 0.4f);
-		float height = 0.15f;
-		//Test in game and figure out correct range.
-		fruit.transform.localPosition = new Vector3(randoX, height, randoZ);
+		D_Cake result = D_Cake.CreateRandom(transform, randoData.cakeBaseOptions, randoData.frostingCoverOptions, randoData.fruitOptions);
+		currentOrder = result;
+		currentOrder.transform.localScale = Vector3.one;
 
 	}
 
@@ -67,14 +43,14 @@ public class OrderManager : Singleton<OrderManager>
 
 	private int CompareCakes(D_Cake playerCake, D_Cake orderCake)
 	{
-		if (playerCake.cakeBase == null) return 0;
+		if (playerCake.cakeBase is null) return 0;
 		int finalScore = 0;
 
-		if (playerCake.cakeBase.flavor == orderCake.cakeBase.flavor) finalScore += 50;
+		if (Ingredient.Compare(playerCake.cakeBase, orderCake.cakeBase)) finalScore += 50;
 		else finalScore += 5;
 
-		if (playerCake.frostingCover == null) finalScore += 0;
-		else if (playerCake.frostingCover.flavor == orderCake.frostingCover.flavor) finalScore += 50;
+		if (playerCake.frostingCover is null) finalScore += 0;
+		else if (Ingredient.Compare(playerCake.frostingCover, orderCake.frostingCover)) finalScore += 50;
 		else finalScore += 10;
 
 		if (playerCake.fruits.Count < 1) finalScore += 0;

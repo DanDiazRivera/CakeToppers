@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class DesertBuilder : Singleton<DesertBuilder>
 {
+	//[SerializeField] private AudioClip submitOrderSFX;
 	#region Config
 	//public Ing_CakeBase cakeBasePrefab;
 	//public Ing_Frosting_Cover frostingPrefab;
@@ -31,7 +32,8 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	private IngredientButton activeModeIngredientButton;
 
 	#endregion
-
+	
+	
 	protected override void OnAwake()
 	{
 		BeginCake();
@@ -45,6 +47,7 @@ public class DesertBuilder : Singleton<DesertBuilder>
 		if (cake == null) return;
 		OrderManager.Get().SubmitDesert(cake);
 		ClearCurrentDesert();
+        //SoundFXManager.instance.PlaySoundFXClip(submitOrderSFX, transform, 1f);
 	}
 
 	public void ClearCurrentDesert()

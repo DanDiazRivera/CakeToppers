@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using EditorAttributes;
 using UnityEngine;
-using TextMP = TMPro.TextMeshProUGUI;
+using TextMP = TMPro.TMP_Text;
 
 public class LevelManager : Singleton<LevelManager>
 {

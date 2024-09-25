@@ -68,10 +68,15 @@ PrefabInstance:
       propertyPath: signature
       value: Chocolate
       objectReference: {fileID: 0}
+    - target: {fileID: 5721985011534375305, guid: 6d8d8ef3c4433af4499e9b7e44492e40,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 60243a2dc16dee14b868b39ebe205240, type: 2}
     - target: {fileID: 7985296265348438350, guid: 6d8d8ef3c4433af4499e9b7e44492e40,
         type: 3}
       propertyPath: m_Name
-      value: Cake Chocolate Variant
+      value: Cake Chocolate
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

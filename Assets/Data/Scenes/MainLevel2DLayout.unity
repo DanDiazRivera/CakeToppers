@@ -1223,6 +1223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5725e6576783974fa3230923464f7bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placeIngredientSFX: {fileID: 8300000, guid: 0c7943340d38df9478bdb6db2af7e0e1, type: 3}
   stationLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -1706,7 +1707,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.6
+  m_fontSize: 26.15
   m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4275,8 +4276,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1031568167}
   m_HandleRect: {fileID: 1031568166}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.98464173
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5551,7 +5552,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000982066}
+  m_AnchoredPosition: {x: 0, y: -0.000019073486}
   m_SizeDelta: {x: 0, y: 131.9}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1456797667
@@ -7807,7 +7808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2100815573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8008,9 +8009,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1124483046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.43500003, y: 0.71555555}
-  m_AnchorMax: {x: 0.5487501, y: 1}
-  m_AnchoredPosition: {x: -1.3999939, y: -37.400024}
+  m_AnchorMin: {x: 0.44250003, y: 0.71555555}
+  m_AnchorMax: {x: 0.55625004, y: 1}
+  m_AnchoredPosition: {x: 0.5, y: -34.2}
   m_SizeDelta: {x: -1, y: -38}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!82 &2118463165
@@ -8360,7 +8361,7 @@ SceneRoots:
   - {fileID: 557127803}
   - {fileID: 378240188}
   - {fileID: 388923206}
+  - {fileID: 2100815574}
   - {fileID: 1638434880}
   - {fileID: 1992094258}
   - {fileID: 286310720}
-  - {fileID: 2100815574}

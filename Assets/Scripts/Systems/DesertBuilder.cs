@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class DesertBuilder : Singleton<DesertBuilder>
 {
-	//[SerializeField] private AudioClip submitOrderSFX;
+	[SerializeField] private AudioClip placeIngredientSFX;
 	#region Config
 	//public Ing_CakeBase cakeBasePrefab;
 	//public Ing_Frosting_Cover frostingPrefab;
@@ -47,7 +47,6 @@ public class DesertBuilder : Singleton<DesertBuilder>
 		if (cake == null) return;
 		OrderManager.Get().SubmitDesert(cake);
 		ClearCurrentDesert();
-        //SoundFXManager.instance.PlaySoundFXClip(submitOrderSFX, transform, 1f);
 	}
 
 	public void ClearCurrentDesert()
@@ -130,23 +129,24 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	private Ingredient AddIngredient(Ingredient ingredient, Vector3 position)
 	{
 		Ingredient NewIngredient = cake.AddIngredient(ingredient, position);
-		if (NewIngredient)
+        SoundFXManager.instance.PlaySoundFXClip(placeIngredientSFX, position, 1f);
+        if (NewIngredient)
 		{
 			if (NewIngredient.placeAnimation)
 			{
-				/* // Legacy Animation Solution.
+                /* // Legacy Animation Solution.
 				Animation anim = NewIngredient.gameObject.AddComponent<Animation>();
 				anim.AddClip(NewIngredient.placeAnimation, "Place");
 				anim.Play("Place");
 				Destroy(anim, NewIngredient.placeAnimation.length);
 				 */
-				//Modern Animator Solution.
-				Animator anim = NewIngredient.gameObject.AddComponent<Animator>();
+                //Modern Animator Solution.
+                Animator anim = NewIngredient.gameObject.AddComponent<Animator>();
 				anim.runtimeAnimatorController = ingredientPlaceController;
 				(anim.runtimeAnimatorController as AnimatorOverrideController)["IngBaseAnim"] = NewIngredient.placeAnimation;
 				anim.Play("Place");
-				Destroy(anim, NewIngredient.placeAnimation.length);
-			}
+                Destroy(anim, NewIngredient.placeAnimation.length);
+            }
 			return NewIngredient;
 		}
 		return null;

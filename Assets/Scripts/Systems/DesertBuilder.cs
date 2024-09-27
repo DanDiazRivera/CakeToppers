@@ -129,7 +129,7 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	private Ingredient AddIngredient(Ingredient ingredient, Vector3 position)
 	{
 		Ingredient NewIngredient = cake.AddIngredient(ingredient, position);
-        SoundFXManager.instance.PlaySoundFXClip(placeIngredientSFX, position, 1f);
+        //SoundFXManager.instance.PlaySoundFXClip(placeIngredientSFX, position, 1f);
         if (NewIngredient)
 		{
 			if (NewIngredient.placeAnimation)

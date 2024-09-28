@@ -8,6 +8,7 @@ public abstract class Ingredient : MonoBehaviour
 
 	public string signature;
 	public AnimationClip placeAnimation;
+	public AudioClip placeAudio;
 
 	public static bool Compare(Ingredient A, Ingredient B)
 	{

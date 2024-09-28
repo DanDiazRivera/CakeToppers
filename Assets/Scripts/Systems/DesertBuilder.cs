@@ -7,11 +7,7 @@ using UnityEngine.EventSystems;
 
 public class DesertBuilder : Singleton<DesertBuilder>
 {
-	[SerializeField] private AudioClip placeIngredientSFX;
 	#region Config
-	//public Ing_CakeBase cakeBasePrefab;
-	//public Ing_Frosting_Cover frostingPrefab;
-	//public Ing_Fruit strawberryPrefab;
 	public LayerMask stationLayerMask;
 	public RuntimeAnimatorController ingredientPlaceController;
 
@@ -19,8 +15,8 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	#endregion
 	#region Components
 
-	//private Desert desert;
 	private D_Cake cake;
+	private new AudioSource audio;
 
 	#endregion
 	#region Data
@@ -38,6 +34,7 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	{
 		BeginCake();
 		Input.Tap.performed += _ => Tap();
+		audio = GetComponent<AudioSource>();
 	}
 
 	private void BeginCake() => cake = Desert.Create<D_Cake>("New Cake", transform);
@@ -129,7 +126,6 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	private Ingredient AddIngredient(Ingredient ingredient, Vector3 position)
 	{
 		Ingredient NewIngredient = cake.AddIngredient(ingredient, position);
-        //SoundFXManager.instance.PlaySoundFXClip(placeIngredientSFX, position, 1f);
         if (NewIngredient)
 		{
 			if (NewIngredient.placeAnimation)
@@ -147,6 +143,7 @@ public class DesertBuilder : Singleton<DesertBuilder>
 				anim.Play("Place");
                 Destroy(anim, NewIngredient.placeAnimation.length);
             }
+			audio.PlayOneShot(NewIngredient.placeAudio);
 			return NewIngredient;
 		}
 		return null;

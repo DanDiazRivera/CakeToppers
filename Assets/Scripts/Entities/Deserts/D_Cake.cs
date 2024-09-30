@@ -44,7 +44,7 @@ public class D_Cake : Desert
 		result.AddIngredient(frostingCovers.Random(), Vector3.zero);
 
 		Ing_Fruit fruit = result.AddIngredient(fruits[0], Vector3.zero) as Ing_Fruit;
-		fruit.transform.localPosition = new (Random.Range(-1.65f, 1.65f), 0.5f, Random.Range(-1.65f, 1.65f)); 
+		fruit.transform.localPosition = new (Random.Range(-1.65f, 1.65f), 1.35f, Random.Range(-1.65f, 1.65f)); 
 
 
 		/*

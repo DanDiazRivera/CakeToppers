@@ -141,7 +141,7 @@ public class DesertBuilder : Singleton<DesertBuilder>
 				anim.runtimeAnimatorController = ingredientPlaceController;
 				(anim.runtimeAnimatorController as AnimatorOverrideController)["IngBaseAnim"] = NewIngredient.placeAnimation;
 				anim.Play("Place");
-                Destroy(anim, NewIngredient.placeAnimation.length);
+                Destroy(anim, NewIngredient.placeAnimation.length + 0.01f);
             }
 			audio.PlayOneShot(NewIngredient.placeAudio);
 			return NewIngredient;

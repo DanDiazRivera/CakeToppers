@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5896380898621386086}
   - component: {fileID: 7978564024564853228}
   m_Layer: 0
-  m_Name: frosting
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 6448656708684516949}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.7, z: 0}
-  m_LocalScale: {x: 9.9537, y: 9.029799, z: 9.9537}
+  m_LocalPosition: {x: 0, y: -0.1428572, z: 0}
+  m_LocalScale: {x: 10, y: 6.428571, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7554269494262796311}
@@ -120,21 +120,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325601026256334527, guid: b04627b864d525e479f157049e546591,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325601026256334527, guid: b04627b864d525e479f157049e546591,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325601026256334527, guid: b04627b864d525e479f157049e546591,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7325601026256334527, guid: b04627b864d525e479f157049e546591,
         type: 3}

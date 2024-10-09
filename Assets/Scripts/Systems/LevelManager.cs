@@ -26,7 +26,7 @@ public class LevelManager : Singleton<LevelManager>
 	[SerializeField, ReadOnly]
 	float currentLevelTime;
 	[SerializeField, ReadOnly]
-	float currentScore;
+	int currentScore;
 
 	private bool paused;
 
@@ -55,9 +55,14 @@ public class LevelManager : Singleton<LevelManager>
 
 	void EndLevel()
 	{
+		GameMainManager.GoToResults(currentScore, minWinScore);
+		/*
 		levelEndCanvas.SetActive(true);
 		(currentScore >= minWinScore ? winDialogue : loseDialogue).SetActive(true);
+		 */
 	}
+
+	public void ReturnToTitle() => GameMainManager.ReturnToTitle();
 
 	public void AddScore(int score)
 	{

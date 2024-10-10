@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1711767723441906931}
   - component: {fileID: 6309948186320811734}
+  - component: {fileID: 4693295263571555165}
   m_Layer: 0
   m_Name: Strawberry
   m_TagString: Untagged
@@ -48,6 +49,27 @@ MonoBehaviour:
   signature: Strawberry
   placeAnimation: {fileID: 0}
   placeAudio: {fileID: 8300000, guid: 0c7943340d38df9478bdb6db2af7e0e1, type: 3}
+--- !u!135 &4693295263571555165
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141067963582815038}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.25
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1001 &6293674350187805340
 PrefabInstance:
   m_ObjectHideFlags: 0

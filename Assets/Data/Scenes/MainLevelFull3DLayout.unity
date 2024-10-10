@@ -5918,7 +5918,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000017610704}
+  m_AnchoredPosition: {x: 0, y: 0.00012118832}
   m_SizeDelta: {x: 0, y: 131.9}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1289100986
@@ -9314,6 +9314,7 @@ MonoBehaviour:
   stationLayerMask:
     serializedVersion: 2
     m_Bits: 1
+  ingredientPlaceController: {fileID: 0}
 --- !u!4 &1893820409
 Transform:
   m_ObjectHideFlags: 0

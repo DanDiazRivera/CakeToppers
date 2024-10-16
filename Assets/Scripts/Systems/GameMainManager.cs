@@ -11,6 +11,7 @@ public class GameMainManager : Singleton<GameMainManager>
     public GameState state;
     public CakeToppersSaveData saveData;
     public float pointsTransfer;
+    public List<List<bool>> levelData;
 
     protected override void OnAwake()
     {

@@ -9,6 +9,7 @@ public class LevelManager : Singleton<LevelManager>
 	#region Config
 	[SerializeField] float levelTime;
 	[SerializeField] int minWinScore;
+	[SerializeField] List<List<GameObject>> ingredients;
 
 	#endregion
 	#region Components
@@ -42,6 +43,7 @@ public class LevelManager : Singleton<LevelManager>
 		currentLevelTime = levelTime;
 		currentScore = 0;
 		AddScore(0);
+		HandleIngredients(GameMainManager.Get().levelData);
 	}
 
 	void Update()
@@ -75,5 +77,19 @@ public class LevelManager : Singleton<LevelManager>
 		paused = value;
 		pauseCanvas.SetActive(value);
 	}
+
+	public void HandleIngredients(List<List<bool>> levelIngredients)
+    {
+        for (int i1 = 0; i1 < ingredients.Count; i1++)
+        {
+			bool hasOne = false;
+            for (int i2 = 1; i2 < ingredients[i1].Count; i2++)
+            {
+				if (levelIngredients[i1][i2] == true) hasOne = true;
+				else ingredients[i1][i2].SetActive(false);
+            }
+			ingredients[i1][0].SetActive(hasOne);
+        }
+    }
 
 }

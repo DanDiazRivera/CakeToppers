@@ -26,6 +26,6 @@ public class TitleScreen : MonoBehaviour
 
     }
 
-    public void BeginGame() => GameMainManager.BeginGame();
+    //public void BeginGame() => GameMainManager.BeginGame();
 
 }

@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 54069939}
   - component: {fileID: 54069938}
   - component: {fileID: 54069937}
+  - component: {fileID: 54069940}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -205,9 +206,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2001897351}
-        m_TargetAssemblyTypeName: TitleScreen, Assembly-CSharp
-        m_MethodName: BeginGame
+      - m_Target: {fileID: 54069940}
+        m_TargetAssemblyTypeName: LevelSelect, Assembly-CSharp
+        m_MethodName: SceneSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -255,6 +256,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54069935}
   m_CullTransparentMesh: 1
+--- !u!114 &54069940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54069935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a82ac893ec40c448ac8692b3a49e867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WorldSelectPanel: {fileID: 0}
+  WorldPanel: {fileID: 0}
+  nextScene: LevelSelect
 --- !u!1 &250882750
 GameObject:
   m_ObjectHideFlags: 0

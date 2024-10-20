@@ -36,7 +36,7 @@ public class D_Cake : Desert
 		return null; 
 	}
 
-	public static D_Cake CreateRandom(Transform parent ,Ing_CakeBase[] bases, Ing_Frosting_Cover[] frostingCovers, Ing_Fruit[] fruits)
+	public static D_Cake CreateRandom(Transform parent, Ing_CakeBase[] bases, Ing_Frosting_Cover[] frostingCovers, Ing_Fruit[] fruits)
 	{
 		D_Cake result = Create<D_Cake>("Order Cake", parent);
 

@@ -101,27 +101,7 @@ public class D_Cake : Desert
 			if (distance < range / 4f) finalScore += 25;
 
         }
-		/*
-        if (playerCake.fruits.Count < 1) finalScore += 0;
-        else
-        {
-		 
-            finalScore += 10;
 
-            Vector2 inputStrawbPos = new(playerCake.fruits[0].transform.localPosition.x, playerCake.fruits[0].transform.localPosition.z);
-            Vector2 orderStrawbPos = new(fruits[0].transform.localPosition.x, fruits[0].transform.localPosition.z);
-
-            float distance = Vector2.Distance(inputStrawbPos, orderStrawbPos);
-
-            finalScore += distance switch
-            {
-                < 0.2192031f => 50,
-                < 0.4384062f => 25,
-                _ => 0
-            };
-
-            finalScore += playerCake.fruits.Count - 1;
-        }*/
 
         return finalScore;
     }

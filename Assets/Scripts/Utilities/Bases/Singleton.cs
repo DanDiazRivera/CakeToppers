@@ -28,7 +28,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 			result = findAttempt;
 			_instance = result;
 
-			_instance.Awake();
+			(_instance as T).OnAwake();
 			return true;
 		}
 		else
@@ -57,7 +57,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 		_instance = result;
 		if(dontDestroyOnLoad) DontDestroyOnLoad(result.gameObject);
 		
-		_instance.Awake();
+		_instance.OnAwake();
 		return result;
 	}
 
@@ -69,8 +69,8 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 
 		GameObject result = Instantiate(UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>(path).WaitForCompletion());
 		_instance = result.GetComponent<T>();
-		
-		_instance.Awake();
+
+		(_instance as T).OnAwake();
 		return _instance;
 	}
 	#endif
@@ -105,7 +105,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 		{
 			if (_instance == this) return;
 			_instance = (T)this;
-			OnAwake();
+			this.OnAwake();
 		}
 	}
 

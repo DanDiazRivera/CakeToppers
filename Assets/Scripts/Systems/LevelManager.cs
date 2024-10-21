@@ -2,6 +2,7 @@ using EditorAttributes;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System.Linq;
 using TextMP = TMPro.TMP_Text;
 
 public class LevelManager : Singleton<LevelManager>
@@ -9,8 +10,8 @@ public class LevelManager : Singleton<LevelManager>
     #region Config
     [SerializeField] float levelTime;
     [SerializeField] int minWinScore;
-    [SerializeField] public List<ListC<GameObject>> ingredientGroups;
-    [SerializeField] public List<ListC<bool>> defIngredients;
+
+    public LevelData levelData;
 
     #endregion
     #region Components
@@ -44,7 +45,9 @@ public class LevelManager : Singleton<LevelManager>
         currentLevelTime = levelTime;
         currentScore = 0;
         AddScore(0);
-        HandleIngredients(GameMainManager.Get().levelData);
+        var selectLevelData = GameMainManager.Get().levelData;
+        levelData = selectLevelData ? selectLevelData : levelData;
+        HandleIngredients();
     }
 
     void Update()
@@ -75,20 +78,23 @@ public class LevelManager : Singleton<LevelManager>
         pauseCanvas.SetActive(value);
     }
 
-    public void HandleIngredients(List<ListC<bool>> levelIngredients)
+    public void HandleIngredients()
     {
-        if (levelIngredients is null) levelIngredients = defIngredients;
-        for (int i1 = 0; i1 < ingredientGroups.Count; i1++)
-        {
-            bool hasOne = false;
-            for (int i2 = 1; i2 < ingredientGroups[i1].Count; i2++)
-            {
-                if (levelIngredients[i1][i2-1] == true) hasOne = true;
-                else ingredientGroups[i1][i2].SetActive(false);
-            }
-            ingredientGroups[i1][0].SetActive(hasOne);
-        }
-        
+        if (levelData is null) return;
+
+        IngredientButton[] buttons = FindObjectsOfType<IngredientButton>();
+
+        IngredientButton[] disableButtons = (IngredientButton[]) from button in buttons
+                                            where !levelData.ingredients.Contains(button.ingredient)
+                                            select button;
+
+        foreach(var button in buttons) button.gameObject.SetActive(true);
+
+        var tabMan = FindFirstObjectByType<IngredientTabManager>();
+        tabMan.Awake();
+
+
+
     }
 
 }

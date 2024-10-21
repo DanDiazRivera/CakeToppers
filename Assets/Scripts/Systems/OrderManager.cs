@@ -60,10 +60,63 @@ public class OrderManager : Singleton<OrderManager>
 
     public void SubmitDesert(D_Cake input)
     {
-        int score = currentOrder.Compare(input);
+        int score = Compare(currentOrder, input);
         LevelManager.Get().AddScore(score);
         Destroy(currentOrder.gameObject);
         RandomizeDesert();
     }
+
+
+
+
+
+    public int Compare(D_Cake orderCake, D_Cake playerCake)
+    {
+        if (playerCake.cakeBase is null) return 0;
+        int finalScore = 0;
+
+        if (Ingredient.Compare(playerCake.cakeBase, orderCake.cakeBase)) finalScore += 50;
+        else finalScore += 5;
+
+        if (playerCake.frostingCover is null) finalScore += 0;
+        else if (Ingredient.Compare(playerCake.frostingCover, orderCake.frostingCover)) finalScore += 50;
+        else finalScore += 10;
+
+        float range = 1.3f;
+
+        Collider[] overlapResults = new Collider[5];
+        for (int i = 0; i < orderCake.fruits.Count; i++)
+        {
+            int count = Physics.OverlapSphereNonAlloc(playerCake.transform.position + orderCake.fruits[i].transform.localPosition, range, overlapResults, ~0);
+            Transform chosenFruit = null;
+            for (int i2 = 0; i2 < count; i2++)
+            {
+                if (overlapResults[i2]
+                    && overlapResults[i2].gameObject.TryGetComponent(out Ing_Fruit thisFruit)
+                    && Ingredient.Compare(thisFruit, orderCake.fruits[i]))
+                {
+                    chosenFruit = overlapResults[i2].transform;
+                    break;
+                }
+            }
+            if (chosenFruit == null) continue;
+
+            finalScore += 10;
+
+            float distance = Vector2.Distance(chosenFruit.localPosition, orderCake.fruits[i].transform.localPosition);
+            Debug.Log(distance);
+            if (distance < range / 2f) finalScore += 25;
+            if (distance < range / 4f) finalScore += 25;
+
+        }
+
+
+        return finalScore;
+    }
+
+
+
+
+
 
 }

@@ -28,4 +28,9 @@ public class LevelSelect : MonoBehaviour
         WorldPanel.SetActive(false);
         WorldSelectPanel.SetActive(true);
     }
+
+    public void BeginLevel(LevelData levelData)
+    {
+        GameMainManager.BeginGame(levelData);
+    }
 }

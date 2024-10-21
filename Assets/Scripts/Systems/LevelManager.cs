@@ -1,15 +1,14 @@
 using EditorAttributes;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using System.Linq;
 using TextMP = TMPro.TMP_Text;
 
 public class LevelManager : Singleton<LevelManager>
 {
     #region Config
     [SerializeField] float levelTime;
-    [SerializeField] int minWinScore;
 
     public LevelData levelData;
 
@@ -42,12 +41,11 @@ public class LevelManager : Singleton<LevelManager>
     protected override void OnAwake()
     {
         Input.Get();
-        currentLevelTime = levelTime;
         currentScore = 0;
-        AddScore(0);
-        var selectLevelData = GameMainManager.Get().levelData;
-        levelData = selectLevelData ? selectLevelData : levelData;
+        levelData = GameMainManager.Get().levelData ?? levelData;
         HandleIngredients();
+        currentLevelTime = levelData.time;
+        AddScore(0);
     }
 
     void Update()
@@ -59,17 +57,18 @@ public class LevelManager : Singleton<LevelManager>
         currentTimerText.text = ((int)currentLevelTime).ToString();
     }
 
-    void EndLevel() => GameMainManager.GoToResults(currentScore, minWinScore);/*
-		levelEndCanvas.SetActive(true);
-		(currentScore >= minWinScore ? winDialogue : loseDialogue).SetActive(true);
-		 */
+    void EndLevel()
+    {
+        GameMainManager.Get().levelData ??= levelData;
+        GameMainManager.GoToResults(currentScore);
+    }
 
     public void ReturnToTitle() => GameMainManager.ReturnToTitle();
 
     public void AddScore(int score)
     {
         currentScore += score;
-        currentScoreText.text = currentScore.ToString() + "\n/" + minWinScore.ToString();
+        currentScoreText.text = currentScore.ToString() + "\n/" + levelData.minScore.ToString();
     }
 
     public void SetPause(bool value)
@@ -82,15 +81,15 @@ public class LevelManager : Singleton<LevelManager>
     {
         if (levelData is null) return;
 
-        IngredientButton[] buttons = FindObjectsOfType<IngredientButton>();
+        IngredientButton[] buttons = FindObjectsOfType<IngredientButton>(true);
 
-        IngredientButton[] disableButtons = (IngredientButton[]) from button in buttons
-                                            where !levelData.ingredients.Contains(button.ingredient)
-                                            select button;
+        IngredientButton[] disableButtons = (from button in buttons
+                                                 where !levelData.ingredients.Contains(button.ingredient)
+                                                 select button).ToArray();
 
-        foreach(var button in buttons) button.gameObject.SetActive(true);
+        foreach (IngredientButton button in disableButtons) button.gameObject.SetActive(false);
 
-        var tabMan = FindFirstObjectByType<IngredientTabManager>();
+        IngredientTabManager tabMan = FindFirstObjectByType<IngredientTabManager>();
         tabMan.Awake();
 
 
@@ -106,8 +105,8 @@ public struct ListC<T>
 
     public T this[int i]
     {
-        get { return List[i]; }
-        set { List[i] = value; }
+        get => List[i];
+        set => List[i] = value;
     }
     public int Count => List.Count;
 }

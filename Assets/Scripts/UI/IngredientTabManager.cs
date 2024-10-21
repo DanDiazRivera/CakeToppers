@@ -28,9 +28,9 @@ public class IngredientTabManager : MonoBehaviour
 			bool hasStuff = false;
             foreach (Transform T in tabs[i])
             {
-                if (T.gameObject.activeInHierarchy)
+                if (T.gameObject.activeSelf)
                 {
-					hasStuff = false;
+					hasStuff = true;
 					break;
                 }
             }

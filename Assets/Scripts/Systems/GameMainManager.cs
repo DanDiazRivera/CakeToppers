@@ -10,7 +10,7 @@ public class GameMainManager : Singleton<GameMainManager>
     public enum GameState { Title, Playing, Paused, Results }
     public GameState state;
     public CakeToppersSaveData saveData;
-    public float pointsTransfer;
+    public int pointsTransfer;
     public LevelData levelData;
 
     protected override void OnAwake()
@@ -19,19 +19,18 @@ public class GameMainManager : Singleton<GameMainManager>
         CakeToppersSaveData.Get(ref saveData);
     }
 
-    public static void BeginGame()
+    public static void BeginGame(LevelData levelData)
     {
-        //if (Get().state != GameState.Title) return;
+        Get().levelData = levelData;
         SceneManager.LoadScene(1);
     }
     public static void ReturnToTitle()
     {
-        //if (Get().state == GameState.Title) return;
         SceneManager.LoadScene(0);
     }
-    public static void GoToResults(int currentPoints, int requiredPoints)
+    public static void GoToResults(int currentPoints)
     {
-        Get().pointsTransfer = currentPoints / requiredPoints;
+        Get().pointsTransfer = currentPoints;
         SceneManager.LoadScene(2);
     }
 

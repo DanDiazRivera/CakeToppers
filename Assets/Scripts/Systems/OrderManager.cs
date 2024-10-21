@@ -16,20 +16,14 @@ public class OrderManager : Singleton<OrderManager>
         public Ing_Frosting_Cover[] frostingCoverOptions;
         public Ing_Fruit[] fruitOptions;
 
-        public void HandleIngredients(List<ListC<GameObject>> levelIngredients)
+        public void HandleIngredients(List<Ingredient> levelIngredients)
         {
-            cakeBaseOptions = (
-                from check in levelIngredients[0].List 
-                where check.activeSelf && check.TryGetComponent(out IngredientButton check2) && check2.ingredient is Ing_CakeBase
-                select check.GetComponent<IngredientButton>().ingredient as Ing_CakeBase ).ToArray();
-            frostingCoverOptions = (
-                from check in levelIngredients[1].List
-                where check.activeSelf && check.TryGetComponent(out IngredientButton check2) && check2.ingredient is Ing_Frosting_Cover
-                select check.GetComponent<IngredientButton>().ingredient as Ing_Frosting_Cover ).ToArray();
-            fruitOptions = (
-                from check in levelIngredients[2].List
-                where check.activeSelf && check.TryGetComponent(out IngredientButton check2) && check2.ingredient is Ing_Fruit
-                select check.GetComponent<IngredientButton>().ingredient as Ing_Fruit ).ToArray();
+            cakeBaseOptions = (from check in levelIngredients where check is Ing_CakeBase
+                select check as Ing_CakeBase ).ToArray();
+            frostingCoverOptions = (from check in levelIngredients where check is Ing_Frosting_Cover
+                select check as Ing_Frosting_Cover ).ToArray();
+            fruitOptions = (from check in levelIngredients where check is Ing_Fruit
+                select check as Ing_Fruit ).ToArray();
         } 
 
 
@@ -39,7 +33,7 @@ public class OrderManager : Singleton<OrderManager>
 
     protected override void OnAwake()
     {
-        randoData.HandleIngredients(LevelManager.Get().ingredientGroups);
+        randoData.HandleIngredients(LevelManager.Get().levelData.ingredients);
         RandomizeDesert();
     }
 
@@ -67,20 +61,31 @@ public class OrderManager : Singleton<OrderManager>
     }
 
 
-
-
+    [SerializeField] private ComparisonData compareData = new ();
+    [System.Serializable]
+    private struct ComparisonData
+    {
+        public int noCakeNegative;
+        public int wrongCake;
+        public int rightCake;
+        public int wrongFrost;
+        public int rightFrost;
+        public int vagueFruit;
+        public int nearFruit;
+        public int perfectFruit;
+    }
 
     public int Compare(D_Cake orderCake, D_Cake playerCake)
     {
-        if (playerCake.cakeBase is null) return 0;
+        if (playerCake.cakeBase is null) return compareData.noCakeNegative;
         int finalScore = 0;
 
-        if (Ingredient.Compare(playerCake.cakeBase, orderCake.cakeBase)) finalScore += 50;
-        else finalScore += 5;
+        if (Ingredient.Compare(playerCake.cakeBase, orderCake.cakeBase)) finalScore += compareData.rightCake;
+        else finalScore += compareData.wrongCake;
 
         if (playerCake.frostingCover is null) finalScore += 0;
-        else if (Ingredient.Compare(playerCake.frostingCover, orderCake.frostingCover)) finalScore += 50;
-        else finalScore += 10;
+        else if (Ingredient.Compare(playerCake.frostingCover, orderCake.frostingCover)) finalScore += compareData.rightFrost;
+        else finalScore += compareData.wrongFrost;
 
         float range = 1.3f;
 
@@ -101,12 +106,11 @@ public class OrderManager : Singleton<OrderManager>
             }
             if (chosenFruit == null) continue;
 
-            finalScore += 10;
+            finalScore += compareData.vagueFruit;
 
             float distance = Vector2.Distance(chosenFruit.localPosition, orderCake.fruits[i].transform.localPosition);
-            Debug.Log(distance);
-            if (distance < range / 2f) finalScore += 25;
-            if (distance < range / 4f) finalScore += 25;
+            if (distance < range / 2f) finalScore += compareData.nearFruit;
+            if (distance < range / 4f) finalScore += compareData.perfectFruit;
 
         }
 

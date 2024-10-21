@@ -11,8 +11,13 @@ public class ResultsScreen : MonoBehaviour
     private void Awake()
     {
         float newScore = GameMainManager.Get().pointsTransfer;
+        LevelData level = GameMainManager.Get().levelData;
 
-        int cookies = (int)(newScore.Max(1.5f) * 2);
+        int cookies = 0;
+
+        if (newScore >= level.minScore) cookies++;
+        if (newScore >= level.cookie2Score) cookies++;
+        if (newScore >= level.cookie3Score) cookies++;
 
         GameMainManager.Get().saveData.cookies += cookies;
         GameMainManager.Get().saveData.Save();

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e950a6e573f911b4fad5a3560f6b2500, type: 3}
   m_Name: Level 1-1
   m_EditorClassIdentifier: 
-  TIME: 100
-  minScore: 200
-  cookie2Score: 300
-  cookie3Score: 400
+  time: 0
+  minScore: 100
+  cookie2Score: 150
+  cookie3Score: 200
   ingredients:
   - {fileID: 3785596317790047933, guid: 6d8d8ef3c4433af4499e9b7e44492e40, type: 3}
   - {fileID: 5312187727740267785, guid: d3a5949d16b740448a21ead1aa39161b, type: 3}

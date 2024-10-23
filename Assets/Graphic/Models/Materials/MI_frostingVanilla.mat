@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FrostingVanilla
+  m_Name: MI_frostingVanilla
   m_Shader: {fileID: -6465566751694194690, guid: db13a7a8c1bd4d3459d2649bf904475c,
     type: 3}
   m_Parent: {fileID: 0}

@@ -41,6 +41,7 @@ public abstract class SaveData<T> where T : SaveData<T>
 
     public void Save()
     {
+        (this as T).BeforeSave();
         DirectoryCheck();
         using StreamWriter save = File.CreateText(FullFilePath());
         save.WriteLine(JsonUtility.ToJson(this as T, true)); 
@@ -52,7 +53,11 @@ public abstract class SaveData<T> where T : SaveData<T>
         if (!File.Exists(FullFilePath())) Save();
         using StreamReader load = File.OpenText(FullFilePath());
         JsonUtility.FromJsonOverwrite(load.ReadToEnd(), this as T);
+        (this as T).AfterLoad();
     }
+
+    protected virtual void BeforeSave() { }
+    protected virtual void AfterLoad() { }
 
     protected void DirectoryCheck() { if (!Directory.Exists(this.DataPath())) Directory.CreateDirectory(this.DataPath()); }
 
@@ -66,36 +71,3 @@ public abstract class SaveData<T> where T : SaveData<T>
         return data;
     }
 }
-
-/*
-
-public interface ISaveSystem<T> where T : SaveData
-{
-    public abstract void Save();
-    public abstract void Load();
-
-
-    protected static T INew(ref T data)
-    {
-        data = Activator.CreateInstance<T>();
-        return data;
-    }
-    protected static void ISave(ref T data, T newData = null)
-    {
-        if (newData == null) data = Activator.CreateInstance<T>();
-        else data = newData;
-        data.Save();
-    }
-    protected static T ILoad(ref T data)
-    {
-        if (data == null) Activator.CreateInstance<T>();
-        data.Load();
-        return data;
-    }
-
-
-
-
-
-}
- */

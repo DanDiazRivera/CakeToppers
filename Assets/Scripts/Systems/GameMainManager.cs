@@ -12,6 +12,7 @@ public class GameMainManager : Singleton<GameMainManager>
     public CakeToppersSaveData saveData;
     public int pointsTransfer;
     public LevelData levelData;
+    public LevelData[] AllLevels;
 
     protected override void OnAwake()
     {
@@ -36,11 +37,28 @@ public class GameMainManager : Singleton<GameMainManager>
 
 }
 
+[System.Serializable]
 public class CakeToppersSaveData : SaveData<CakeToppersSaveData>
 {
     protected override string FileName() => "CakeToppersData";
 
-    public int cookies;
+    [SerializeField] private int[] levelScores;
 
+    protected override void BeforeSave()
+    {
+        LevelData[] levels = GameMainManager.Get().AllLevels;
+
+        levelScores = new int[levels.Length];
+        for (int i = 0; i < levelScores.Length; i++) 
+            levelScores[i] = levels[i].highScore;
+    }
+    protected override void AfterLoad()
+    {
+        LevelData[] levels = GameMainManager.Get().AllLevels;
+
+        for (int i = 0; i < levelScores.Length; i++)
+            levels[i].highScore = levelScores[i];
+
+    }
 
 }

@@ -15,8 +15,9 @@ public class TitleScreen : MonoBehaviour
     private void Awake()
     {
         mainManager = GameMainManager.Get();
+        mainManager.saveData.Load();
 
-        int cookieCount = mainManager.saveData.cookies;
+        int cookieCount = 0;//mainManager.saveData.cookies;        FIX
 
         for (int i = 0; i < cookieCount; i++)
         {

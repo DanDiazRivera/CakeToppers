@@ -1,18 +1,20 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewLevel", menuName = "Level")]
+[CreateAssetMenu(fileName = "NewLevel", menuName = "Level"), System.Serializable]
 public class LevelData : ScriptableObject
 {
-    public float time;
-    public int minScore;
-    public int cookie2Score;
-    public int cookie3Score;
+    [JsonIgnore] public float time;
+    [JsonIgnore] public int minScore;
+    [JsonIgnore] public int cookie2Score;
+    [JsonIgnore] public int cookie3Score;
 
-    public List<Ingredient> ingredients;
+    [JsonIgnore] public List<Ingredient> ingredients;
 
-    public List<Texture2D> icingShapes;
+    [JsonIgnore] public List<Texture2D> icingShapes;
 
+    public int highScore;
 
 }

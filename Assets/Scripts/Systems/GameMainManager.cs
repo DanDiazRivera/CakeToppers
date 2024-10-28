@@ -12,12 +12,12 @@ public class GameMainManager : Singleton<GameMainManager>
     public CakeToppersSaveData saveData;
     public int pointsTransfer;
     public LevelData levelData;
-    public LevelData[] AllLevels;
+    [HideInInspector] public LevelData[] AllLevels;
 
     protected override void OnAwake()
     {
         DontDestroyOnLoad(this);
-        CakeToppersSaveData.Get(ref saveData);
+        //CakeToppersSaveData.Get(ref saveData);
     }
 
     public static void BeginGame(LevelData levelData)

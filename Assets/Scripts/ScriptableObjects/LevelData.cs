@@ -18,3 +18,21 @@ public class LevelData : ScriptableObject
     public int highScore;
 
 }
+
+public static class _LevelDataListExt
+{
+    public static int Cookies(this LevelData[] list)
+    {
+        int result = 0;
+
+        for (int i = 0; i < list.Length; i++)
+        {
+            if (list[i].highScore >= list[i].minScore) result++;
+            if (list[i].highScore >= list[i].cookie2Score) result++;
+            if (list[i].highScore >= list[i].cookie3Score) result++;
+        }
+
+        return result;
+    }
+    public static bool MinComplete(this LevelData data) => data.highScore >= data.minScore;
+}

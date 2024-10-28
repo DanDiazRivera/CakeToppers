@@ -23,7 +23,9 @@ public class FrostingDrawer : MonoBehaviour
     {
         if (Input.Press.IsPressed())
         {
-            Ray screenRay = camera.ViewportPointToRay(Input.Position / new Vector2(Screen.width, Screen.height));
+            Vector2 PositionScaled = Input.Position / new Vector2(Screen.width, Screen.height);
+            if (!(PositionScaled.x >= 0 && PositionScaled.x <= 1 && PositionScaled.y >= 0 && PositionScaled.y <= 1)) return;
+            Ray screenRay = camera.ViewportPointToRay(PositionScaled);
             castHits = Physics.RaycastAll(screenRay, 1000f);
             int i = -1;
             for (; i < castHits.Length - 1; i++)
@@ -37,13 +39,18 @@ public class FrostingDrawer : MonoBehaviour
             if (castHits.Length > 0 && i != -1)
             {
                 Vector2 pos = castHits[i].textureCoord * new Vector2(currentTexture.width, currentTexture.height);
-                this.pos = pos;
-                currentTexture.SetPixel((int)pos.x, (int)pos.y, Color.white);
-                currentTexture.Apply();
+                DrawPixel(new Vector3Int((int)(pos.x - 0.5f), (int)(pos.y - 0.5f)));
             }
-            //castHits.First(i => i.collider.gameObject == frosting)
         }
     }
     private RaycastHit[] castHits;
-    public Vector2 pos;
+
+    readonly Color[] colors = { Color.white, Color.white, Color.white, Color.white };
+
+    private void DrawPixel(Vector3Int pos)
+    {
+        currentTexture.SetPixels(pos.x, pos.y, 2, 2, colors);
+        currentTexture.Apply();
+    }
+
 }

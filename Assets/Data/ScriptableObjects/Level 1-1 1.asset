@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e950a6e573f911b4fad5a3560f6b2500, type: 3}
+  m_Name: Level 1-1 1
+  m_EditorClassIdentifier: 
+  time: 75
+  minScore: 100
+  cookie2Score: 150
+  cookie3Score: 200
+  ingredients:
+  - {fileID: 3785596317790047933, guid: 6d8d8ef3c4433af4499e9b7e44492e40, type: 3}
+  - {fileID: 5312187727740267785, guid: d3a5949d16b740448a21ead1aa39161b, type: 3}
+  - {fileID: 6309948186320811734, guid: 5ac42041798e1af4da0767c5236a6de0, type: 3}

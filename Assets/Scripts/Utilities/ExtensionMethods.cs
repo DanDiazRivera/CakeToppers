@@ -60,6 +60,7 @@ public static class EasierMathExtensions
 	public static float RandomFrom(this Vector2 input) => UnityEngine.Random.Range(input.x, input.y);
 	public static int RandomFrom(this Vector2Int input) => UnityEngine.Random.Range(input.x, input.y);
 
+	public static float DistanceFrom(this float input, float second) => Mathf.Abs(input - second);
 
 }
 

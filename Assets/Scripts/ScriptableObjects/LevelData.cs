@@ -12,7 +12,7 @@ public class LevelData : ScriptableObject
 
     public List<Ingredient> ingredients;
 
-
+    public List<Texture2D> icingShapes;
 
 
 }

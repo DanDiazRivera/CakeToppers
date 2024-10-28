@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using EditorAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,11 +27,12 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	private int mode; // 0 = Normal, 1 = Multi Object Placement, 2 = Drawing
 	private Ingredient activeModeIngredient;
 	private IngredientButton activeModeIngredientButton;
+    public new Camera camera;
 
-	#endregion
-	
-	
-	protected override void OnAwake()
+    #endregion
+
+
+    protected override void OnAwake()
 	{
 		BeginCake();
 		Input.Tap.performed += _ => Tap();
@@ -52,9 +54,15 @@ public class DesertBuilder : Singleton<DesertBuilder>
 		BeginCake();
 	}
 
-	bool GetMousePosition()
+	bool GetMousePosition(out Ray mouseRay)
 	{
-		Ray mouseRay = Camera.main.ScreenPointToRay(Input.Position);
+        Vector2 PositionScaled = Input.Position / new Vector2(Screen.width, Screen.height);
+        if (PositionScaled.x > 1 || PositionScaled.x < 0 || PositionScaled.y > 1 || PositionScaled.y < 0)
+		{
+			mouseRay = new Ray();
+            return false;
+        }
+        mouseRay = Camera.main.ViewportPointToRay(PositionScaled);
 		if (Physics.Raycast(mouseRay, out RaycastHit hitInfo, 1000f, stationLayerMask))
 		{
 			cursorPosition = hitInfo.point;
@@ -66,6 +74,7 @@ public class DesertBuilder : Singleton<DesertBuilder>
 			return false;
 		}
 	}
+	bool GetMousePosition() => GetMousePosition(out _);
 
 	public void ClickIngredient(Ingredient ingredient, IngredientButton button)
 	{
@@ -94,20 +103,27 @@ public class DesertBuilder : Singleton<DesertBuilder>
 		if (ingredient is IPaintIngredient)
 		{
 			mode = 2;
-			activeModeIngredient = AddIngredient(ingredient, Vector3.zero);
+			activeModeIngredient = cake.AddIngredient(ingredient, Vector3.zero);
 			if (activeModeIngredient == null) EndActiveMode();
-
-			//////////////////////////////////////////PUT FUNCTIONALITY FOR PAINT INGREDIENTS HERE.//////////////////////////////////////////
 		}
 
 	}
 	void EndActiveMode()
 	{
-		activeModeIngredient = null;
-		if (activeModeIngredientButton) activeModeIngredientButton.EndActiveMode();
-		activeModeIngredientButton = null;
+		if(mode == 2 && activeModeIngredient != null)
+            if ((activeModeIngredient as Ing_FrostingDraw).texture.GetPixels(5)[0].r == 0)
+			{
+                cake.icings.Remove(activeModeIngredient as Ing_FrostingDraw);
+				Destroy(activeModeIngredient.gameObject);
+				activeModeIngredient = null;
+            }
+				
 
-	}
+        mode = 0;
+        activeModeIngredient = null;
+        if (activeModeIngredientButton) activeModeIngredientButton.EndActiveMode();
+        activeModeIngredientButton = null;
+    }
 
 	void Tap()
 	{
@@ -130,13 +146,6 @@ public class DesertBuilder : Singleton<DesertBuilder>
 		{
 			if (NewIngredient.placeAnimation)
 			{
-                /* // Legacy Animation Solution.
-				Animation anim = NewIngredient.gameObject.AddComponent<Animation>();
-				anim.AddClip(NewIngredient.placeAnimation, "Place");
-				anim.Play("Place");
-				Destroy(anim, NewIngredient.placeAnimation.length);
-				 */
-                //Modern Animator Solution.
                 Animator anim = NewIngredient.gameObject.AddComponent<Animator>();
 				anim.runtimeAnimatorController = ingredientPlaceController;
 				(anim.runtimeAnimatorController as AnimatorOverrideController)["IngBaseAnim"] = NewIngredient.placeAnimation;
@@ -149,9 +158,16 @@ public class DesertBuilder : Singleton<DesertBuilder>
 		return null;
 	}
 
+    private void Update()
+    {
+        if (Input.Press.IsPressed() && mode == 2 && GetMousePosition(out Ray screenRay))
+        {
+            castHits = Physics.RaycastAll(screenRay, 1000f);
+            RaycastHit correctHit = castHits.FirstOrDefault(check => check.transform.parent == activeModeIngredient.transform);
+			if(correctHit.transform is not null) 
+				(activeModeIngredient as Ing_FrostingDraw).DrawPixel(correctHit.textureCoord);
+        }
+    }
 
-
-
-
-
+    private RaycastHit[] castHits;
 }

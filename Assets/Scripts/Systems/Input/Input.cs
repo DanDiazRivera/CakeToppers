@@ -44,9 +44,11 @@ public class Input : Singleton<Input>
 		asset = new();
 		asset.Enable();
 		TouchSimulation.Enable();
-		CheckForDebugTouchSim();
+#if UNITY_EDITOR
+        UnityEngine.Debug.Log("Make sure Debug Simulated Touchscreen is active. Go to Window/Analysis/Input Debugger, click on Options, and click \"Simulate Touch Input From Mouse or Pen\"");
+#endif
 
-		DragInit();
+        DragInit();
 	}
 
 	private void DragInit()
@@ -103,11 +105,5 @@ public class Input : Singleton<Input>
 			}
 		}
 	}
-	 
-	void CheckForDebugTouchSim()
-	{
-#if UNITY_EDITOR
-		UnityEngine.Debug.Log("Make sure Debug Simulated Touchscreen is active. Go to Window/Analysis/Input Debugger, click on Options, and click \"Simulate Touch Input From Mouse or Pen\"");
-#endif
-	}
+
 }

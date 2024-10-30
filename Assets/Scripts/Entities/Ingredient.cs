@@ -22,8 +22,10 @@ public abstract class Ingredient : MonoBehaviour
 		newIng.transform.parent = parent;
 		newIng.transform.Reset();
 		newIng.SetActive(true);
+		this.AlterTransforms();
 		return newIng.GetComponent<Ingredient>();
 	}
+	protected virtual void AlterTransforms() { }
 
 	public override bool Equals(object obj) => obj is Ingredient ingredient && base.Equals(obj) && name == ingredient.name && signature == ingredient.signature;
 	public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), name, signature);

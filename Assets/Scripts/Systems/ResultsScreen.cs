@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ResultsScreen : MonoBehaviour
@@ -10,12 +11,18 @@ public class ResultsScreen : MonoBehaviour
 
     private void Awake()
     {
-        float newScore = GameMainManager.Get().pointsTransfer;
+        GameMainManager manager = GameMainManager.Get();
+        int newScore = manager.pointsTransfer;
+        LevelData level = manager.levelData;
 
-        int cookies = (int)(newScore.Max(1.5f) * 2);
+        int cookies = 0;
 
-        GameMainManager.Get().saveData.cookies += cookies;
-        GameMainManager.Get().saveData.Save();
+        if (newScore >= level.minScore) cookies++;
+        if (newScore >= level.cookie2Score) cookies++;
+        if (newScore >= level.cookie3Score) cookies++;
+
+        if (level.highScore < newScore) level.highScore = newScore;
+        if (manager.AllLevels.Contains(manager.levelData)) manager.saveData.Save();
 
         StartCoroutine(CookieShowEnum(cookies));
     }

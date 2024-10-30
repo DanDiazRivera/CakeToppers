@@ -1,7 +1,6 @@
 #define HasAddressables
 
 using System;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -28,7 +27,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 			result = findAttempt;
 			_instance = result;
 
-			_instance.Awake();
+			(_instance as T).OnAwake();
 			return true;
 		}
 		else
@@ -41,7 +40,11 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 	protected static T InitFind()
 	{
 		if (_instance != null) return _instance;
-		if (AttemptFind(out T attempt)) return attempt;
+		if (AttemptFind(out T attempt))
+		{
+			InitFinal(attempt);
+			return _instance;
+		}
 
 		Debug.LogError("No Singleton of type" + nameof(T) + "could be found.");
 		return null;
@@ -54,10 +57,9 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 
 		GameObject GO = new(name??typeof(T).ToString());
 		T result = GO.AddComponent<T>();
-		_instance = result;
+
+		InitFinal(result);
 		if(dontDestroyOnLoad) DontDestroyOnLoad(result.gameObject);
-		
-		_instance.Awake();
 		return result;
 	}
 
@@ -68,9 +70,8 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 		if (AttemptFind(out T attempt)) return attempt;
 
 		GameObject result = Instantiate(UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>(path).WaitForCompletion());
-		_instance = result.GetComponent<T>();
 		
-		_instance.Awake();
+		InitFinal(result.GetComponent<T>());
 		return _instance;
 	}
 	#endif
@@ -104,10 +105,16 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 		else
 		{
 			if (_instance == this) return;
-			_instance = (T)this;
-			OnAwake();
+			InitFinal(this as T);
 		}
 	}
+
+	protected static void InitFinal(T input)
+	{
+		if (_instance || _instance == input) return;
+        _instance = input;
+        (_instance as T).OnAwake(); 
+    }
 
 	protected virtual void OnAwake() { }
 

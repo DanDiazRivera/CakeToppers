@@ -6,19 +6,27 @@ using UnityEngine.UI;
 
 public class LevelSelect : MonoBehaviour
 {
-    public GameObject WorldSelectPanel;
-    public GameObject WorldPanel;
+    public GameObject OptionsPanel;
+    public GameObject CreditsPanel;
     public string nextScene;
     
-    public void OpenPanel()
+    public void OpenOptionsPanel()
     {
-        WorldPanel.SetActive(true);
+        OptionsPanel.SetActive(true);
     }
-    public void ClosePanel()
+    public void CloseOptionsPanel()
     {
-        WorldSelectPanel.SetActive(false);
+        OptionsPanel.SetActive(false);
     }
-    
+    public void OpenCreditsPanel()
+    {
+        CreditsPanel.SetActive(true);
+    }
+    public void CloseCreditsPanel()
+    {
+        CreditsPanel.SetActive(false);
+    }
+
     public void SceneSelect()
     {
         SceneManager.LoadScene(nextScene);
@@ -26,8 +34,8 @@ public class LevelSelect : MonoBehaviour
 
     public void Back()
     {
-        WorldPanel.SetActive(false);
-        WorldSelectPanel.SetActive(true);
+        //WorldPanel.SetActive(false);
+        //WorldSelectPanel.SetActive(true);
     }
 
     public void BeginLevel(LevelData levelData)

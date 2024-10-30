@@ -179,9 +179,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Sean Genutis - Creative Director/3D Artist
+  m_text: 'Sean Genutis - Creative Director/3D Art
 
-    Joshua Almeida - Animation/Rigging'
+    Joshua Almeida - Animation/Rigging
+
+    Amy
+    Bryant- Sound Design/3D Art'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1747,9 +1750,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Max Geiringer - Level and System Designer
+  m_text: 'Max Geiringer - Level and System Design/Programming
 
-    Carl Bowne - Programmer'
+    Carl Bowne -
+    Programming'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

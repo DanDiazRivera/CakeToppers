@@ -106,6 +106,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -298,6 +311,69 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: PlaceholderIngredientIcons_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 100
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fa7d9590961ba24482eca619c738c5d
+      internalID: -1953226592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderIngredientIcons_10
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 100
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17776e3dd77e15641a5afc5df59e69bf
+      internalID: -1499158350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderIngredientIcons_11
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 100
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5abd1c02213e42b41afa92336ba99cb0
+      internalID: 127534664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -311,6 +387,8 @@ TextureImporter:
     nameFileIdTable:
       PlaceholderIngredientIcons_0: 1794093884
       PlaceholderIngredientIcons_1: -841568088
+      PlaceholderIngredientIcons_10: -1499158350
+      PlaceholderIngredientIcons_11: 127534664
       PlaceholderIngredientIcons_2: -609411664
       PlaceholderIngredientIcons_3: -364903639
       PlaceholderIngredientIcons_4: -1616595157
@@ -318,6 +396,7 @@ TextureImporter:
       PlaceholderIngredientIcons_6: -533773737
       PlaceholderIngredientIcons_7: -275584224
       PlaceholderIngredientIcons_8: -1016966500
+      PlaceholderIngredientIcons_9: -1953226592
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

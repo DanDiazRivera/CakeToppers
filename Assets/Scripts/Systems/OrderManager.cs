@@ -7,6 +7,7 @@ public class OrderManager : Singleton<OrderManager>
 {
 
     private D_Cake currentOrder;
+    private Camera orderCam;
 
     [SerializeField, HideInInspector] public RandomizerData randoData;
     [System.Serializable]
@@ -44,7 +45,9 @@ public class OrderManager : Singleton<OrderManager>
     protected override void OnAwake()
     {
         randoData.HandleIngredients(LevelManager.Get().levelData);
+        orderCam = transform.GetChild(0).GetComponent<Camera>();
         RandomizeDesert();
+
     }
 
 
@@ -52,13 +55,17 @@ public class OrderManager : Singleton<OrderManager>
     {
         if (currentOrder != null)
         {
-            Destroy(currentOrder.gameObject);
+            DestroyImmediate(currentOrder.gameObject);
             currentOrder = null;
         }
         var result = D_Cake.CreateRandom(transform, randoData);
         currentOrder = result;
         currentOrder.transform.localScale = Vector3.one;
 
+        Transform[] children = GetComponentsInChildren<Transform>();
+        foreach (Transform tran in children) tran.gameObject.layer = 7;
+
+        orderCam.Render();
     }
 
 

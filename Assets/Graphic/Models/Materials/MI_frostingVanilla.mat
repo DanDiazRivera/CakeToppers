@@ -139,7 +139,7 @@ Material:
     - _minBrightness: 0.3
     - _normalIntensity: 0
     - _opacity: 0.6
-    - _roughnessIntensity: 1
+    - _roughnessIntensity: 0
     - _shaderBias: 0.49
     - _uvOffsetX: 0
     - _uvOffsetY: 0

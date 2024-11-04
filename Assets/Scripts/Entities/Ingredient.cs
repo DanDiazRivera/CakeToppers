@@ -12,7 +12,7 @@ public abstract class Ingredient : MonoBehaviour
 
 	public static bool Compare(Ingredient A, Ingredient B)
 	{
-		if (A is null || B is null) return false;
+		if (A == null || B == null) return false;
 		return A.GetType() == B.GetType() && A.signature == B.signature;
 	}
 

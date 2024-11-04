@@ -46,7 +46,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 			return _instance;
 		}
 
-		Debug.LogError("No Singleton of type" + nameof(T) + "could be found.");
+		Debug.LogWarning("No Singleton of type " + typeof(T) + " could be found.");
 		return null;
 	}
 
@@ -168,41 +168,5 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 		
 	}
 
-	/*
-
-	/// <summary>
-	/// Creates an instance of this singleton and attaches it to the desired Game Object.
-	/// </summary>
-	/// <param name="object"> The object you are attaching the singleton to.</param>
-	/// <param name="replace"> Whether or not this will forcibly replace an existing instance with the new one.</param>
-	public static T Create(GameObject @object, bool replace = false)
-	{
-		if (!replace)
-			if (_instance != null) return null;
-			else Destroy(true);
-		T result = @object.AddComponent<T>();
-		result.Awake();
-		return result;
-	}
-
-#if true
-	/// <summary>
-	/// Instantiates a prefab using the Addressables system. <br/>
-	/// Should be called by a public static void with a hard-coded path.
-	/// </summary>
-	/// <param name="path">The input path. Fill this with a hard-coded path provided by a publicly available wrapper function.</param>
-	protected static void InstantiateFromPath(string path, System.Action<T> response = null)
-	{
-		if (Get() != null) return;
-		Addressables.LoadAssetAsync<GameObject>(path).Completed +=
-		 (op) => {
-			 GameObject prefab = Instantiate(op.Result);
-			 T inst = prefab.GetComponent<T>();
-			 inst.Awake();
-			 response?.Invoke(inst);
-		 };
-	}
-#endif
-	 */
 
 }

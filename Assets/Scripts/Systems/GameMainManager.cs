@@ -17,6 +17,8 @@ public class GameMainManager : Singleton<GameMainManager>
     protected override void OnAwake()
     {
         DontDestroyOnLoad(this);
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 1;
         //CakeToppersSaveData.Get(ref saveData);
     }
 

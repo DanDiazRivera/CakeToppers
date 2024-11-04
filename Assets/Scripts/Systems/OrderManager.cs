@@ -16,23 +16,25 @@ public class OrderManager : Singleton<OrderManager>
         public Ing_CakeBase[] cakeBaseOptions;
         public Ing_Frosting_Cover[] frostingCoverOptions;
         public Ing_Fruit[] fruitOptions;
+        public FruitArrangment[] fruitArrangmentOptions;
         public Ing_FrostingDraw[] icingOptions;
         public Texture2D[] icingShapes;
 
         public void HandleIngredients(LevelData data)
         {
-            cakeBaseOptions = (from check in data.ingredients
-                               where check is Ing_CakeBase
-                               select check as Ing_CakeBase).ToArray();
-            frostingCoverOptions = (from check in data.ingredients
-                                    where check is Ing_Frosting_Cover
-                                    select check as Ing_Frosting_Cover).ToArray();
-            fruitOptions = (from check in data.ingredients
-                            where check is Ing_Fruit
-                            select check as Ing_Fruit).ToArray();
-            icingOptions = (from check in data.ingredients
-                            where check is Ing_FrostingDraw
-                            select check as Ing_FrostingDraw).ToArray();
+            cakeBaseOptions = (from X in data.ingredients
+                               where X is Ing_CakeBase
+                               select X as Ing_CakeBase).ToArray();
+            frostingCoverOptions = (from X in data.ingredients
+                                    where X is Ing_Frosting_Cover
+                                    select X as Ing_Frosting_Cover).ToArray();
+            fruitOptions = (from X in data.ingredients
+                            where X is Ing_Fruit
+                            select X as Ing_Fruit).ToArray();
+            icingOptions = (from X in data.ingredients
+                            where X is Ing_FrostingDraw
+                            select X as Ing_FrostingDraw).ToArray();
+            fruitArrangmentOptions = data.fruitArrangments.ToArray();
             icingShapes = data.icingShapes.ToArray();
 
         }

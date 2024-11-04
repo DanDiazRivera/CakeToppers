@@ -46,10 +46,13 @@ public class OrderManager : Singleton<OrderManager>
     {
         randoData.HandleIngredients(LevelManager.Get().levelData);
         orderCam = transform.GetChild(0).GetComponent<Camera>();
-        RandomizeDesert();
-
     }
 
+    private void Start()
+    {
+        RandomizeDesert();
+        orderCam.enabled = false;
+    } 
 
     public void RandomizeDesert()
     {

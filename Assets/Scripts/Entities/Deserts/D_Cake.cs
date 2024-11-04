@@ -60,13 +60,31 @@ public class D_Cake : Desert
         result.AddIngredient(data.cakeBaseOptions.Random(), Vector3.zero);
         result.AddIngredient(data.frostingCoverOptions.Random(), Vector3.zero);
 
-        int fruitCount = Random.Range(1, 6);
-
-        for (int i = 0; i < fruitCount; i++)
+        if(data.fruitOptions.Length > 0)
         {
-            var thisNewFruit = result.AddIngredient(data.fruitOptions.Random(), Vector3.zero) as Ing_Fruit;
-            thisNewFruit.transform.localPosition = new(Random.Range(-1.65f, 1.65f), 1.20f, Random.Range(-1.65f, 1.65f));
+            if(data.fruitArrangmentOptions.Length == 0)
+            {
+                var thisNewFruit = result.AddIngredient(data.fruitOptions.Random(), Vector3.zero) as Ing_Fruit;
+                thisNewFruit.transform.localPosition = new(Random.Range(-1.65f, 1.65f), 1.20f, Random.Range(-1.65f, 1.65f));
+            }
+            else
+            {
+                FruitArrangment chosenArrang = data.fruitArrangmentOptions.Random();
+
+                Ing_Fruit chosenFruit1 = data.fruitOptions.Random();
+                foreach (Vector3 pos in chosenArrang.positions1) 
+                    result.AddIngredient(chosenFruit1, pos);
+
+                if(chosenArrang.positionCount2 > 0)
+                {
+                    Ing_Fruit chosenFruit2 = data.fruitOptions.Random();
+                    foreach (Vector3 pos in chosenArrang.positions2) 
+                        result.AddIngredient(chosenFruit2, pos);
+                }
+                
+            }
         }
+
 
         if(data.icingOptions.Length > 0)
         {

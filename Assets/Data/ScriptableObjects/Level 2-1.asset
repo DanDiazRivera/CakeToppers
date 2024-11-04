@@ -27,6 +27,11 @@ MonoBehaviour:
   - {fileID: 4198059143076748188, guid: b99adedde7306494eb6efcf8e928d8df, type: 3}
   - {fileID: 762629719544998134, guid: ec644eb10c07ff3449886bb8c8040366, type: 3}
   - {fileID: 7041268099012216044, guid: 17c99ec3a68c10e4599081d4480d137c, type: 3}
+  fruitArrangments:
+  - {fileID: 6650274584509198304, guid: 2363f034229a1ab4d99f1c582b5dfb0c, type: 3}
+  - {fileID: 2379112470798684569, guid: d506280281cf7ba4fa60ee6ca8b4dbca, type: 3}
+  - {fileID: 8733023158795526610, guid: 79c090d9b68b40d498524d2396ce3e43, type: 3}
+  - {fileID: 5851774037770519263, guid: 37b89d5c85104f145820e233e85906a9, type: 3}
   icingShapes:
   - {fileID: 2800000, guid: ca83e149235791a45973ca6633feff6f, type: 3}
   - {fileID: 2800000, guid: 0993fc14dedbe3d48a1f8e3e0670780c, type: 3}

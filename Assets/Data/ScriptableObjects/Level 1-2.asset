@@ -23,3 +23,8 @@ MonoBehaviour:
   - {fileID: 5312187727740267785, guid: d3a5949d16b740448a21ead1aa39161b, type: 3}
   - {fileID: 5472330945162941776, guid: ff35301d7b24ff14dadf147fd6767a63, type: 3}
   - {fileID: 6309948186320811734, guid: 5ac42041798e1af4da0767c5236a6de0, type: 3}
+  fruitArrangments:
+  - {fileID: 2379112470798684569, guid: d506280281cf7ba4fa60ee6ca8b4dbca, type: 3}
+  - {fileID: 6650274584509198304, guid: 2363f034229a1ab4d99f1c582b5dfb0c, type: 3}
+  icingShapes: []
+  highScore: 0

@@ -10,6 +10,7 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] GameObject[] cookies;
     [SerializeField] float cookieOffset;
     [SerializeField] LevelData[] levels;
+    [SerializeField] GameObject SettingsMenuPrefab;
 
     private void Awake()
     {
@@ -19,6 +20,8 @@ public class TitleScreen : MonoBehaviour
 
         int trueCookies = levels.Cookies();
         for (int i = 0; i < cookies.Length; i++) if (trueCookies > i) cookies[i].SetActive(true);
+
+        if(!OptionsMenu.Get()) Instantiate(SettingsMenuPrefab);
     }
 
     //public void BeginGame() => GameMainManager.BeginGame();

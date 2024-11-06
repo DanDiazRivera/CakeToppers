@@ -34,6 +34,16 @@ public static class _LevelDataListExt
         }
 
         return result;
+    }    
+    public static int Cookies(this LevelData data)
+    {
+        int result = 0;
+
+        if (data.highScore >= data.minScore) result++;
+        if (data.highScore >= data.cookie2Score) result++;
+        if (data.highScore >= data.cookie3Score) result++;
+
+        return result;
     }
     public static bool MinComplete(this LevelData data) => data.highScore >= data.minScore;
 }

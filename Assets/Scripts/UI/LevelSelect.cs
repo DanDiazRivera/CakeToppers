@@ -21,12 +21,23 @@ public class LevelSelect : MonoBehaviour
 
     public RectTransform[] worlds;
 
+    public Image[] cookies;
+
     private void Awake()
     {
         GameMainManager.Get();
 
-        for (int i = 1; i < levelButtons.Length; i++)
-            levelButtons[i].interactable = GameMainManager.Get().AllLevels[i - 1].MinComplete();
+        int i = 0, i2 = 0;
+        for (; i < levelButtons.Length; i++)
+        {
+            if(i != 0) levelButtons[i].interactable = GameMainManager.Get().AllLevels[i - 1].MinComplete();
+
+            int cook = GameMainManager.Get().AllLevels[i].Cookies();
+            cookies[i2++].gameObject.SetActive(cook > 0);
+            cookies[i2++].gameObject.SetActive(cook > 1);
+            cookies[i2++].gameObject.SetActive(cook > 2);
+        }
+            
     }
 
     public void ShowWorld(RectTransform thisWorld)

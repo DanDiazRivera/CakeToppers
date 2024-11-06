@@ -480,6 +480,7 @@ MonoBehaviour:
   nextScene: LevelSelect
   levelButtons: []
   worlds: []
+  cookies: []
 --- !u!1 &56016713
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,6 +770,7 @@ MonoBehaviour:
   nextScene: 
   levelButtons: []
   worlds: []
+  cookies: []
 --- !u!1 &276706735
 GameObject:
   m_ObjectHideFlags: 0
@@ -2260,6 +2262,7 @@ GameObject:
   - component: {fileID: 736119637}
   - component: {fileID: 736119636}
   - component: {fileID: 736119635}
+  - component: {fileID: 736119638}
   m_Layer: 5
   m_Name: OptionsButton
   m_TagString: Untagged
@@ -2331,9 +2334,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 250882755}
-        m_TargetAssemblyTypeName: LevelSelect, Assembly-CSharp
-        m_MethodName: OpenOptionsPanel
+      - m_Target: {fileID: 736119638}
+        m_TargetAssemblyTypeName: MiscButtons, Assembly-CSharp
+        m_MethodName: ShowSettingsMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2381,6 +2384,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 736119633}
   m_CullTransparentMesh: 1
+--- !u!114 &736119638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736119633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dcb3624af6ad4c4fa21748ea23bd50f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &772946915
 GameObject:
   m_ObjectHideFlags: 0

@@ -57,7 +57,7 @@ public class LevelManager : Singleton<LevelManager>
         currentTimerText.text = ((int)currentLevelTime).ToString();
     }
 
-    void EndLevel()
+    public void EndLevel()
     {
         GameMainManager.Get().levelData ??= levelData;
         GameMainManager.GoToResults(currentScore);

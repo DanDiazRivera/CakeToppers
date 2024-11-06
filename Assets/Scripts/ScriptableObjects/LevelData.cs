@@ -16,7 +16,7 @@ public class LevelData : ScriptableObject
     [JsonIgnore] public List<FruitArrangment> fruitArrangments;
     [JsonIgnore] public List<Texture2D> icingShapes;
 
-    public int highScore;
+    [HideInInspector] public int highScore;
 
 }
 

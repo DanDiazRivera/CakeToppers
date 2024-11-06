@@ -20,5 +20,6 @@ MonoBehaviour:
   - {fileID: 3785596317790047933, guid: 6d8d8ef3c4433af4499e9b7e44492e40, type: 3}
   - {fileID: 5312187727740267785, guid: d3a5949d16b740448a21ead1aa39161b, type: 3}
   - {fileID: 6309948186320811734, guid: 5ac42041798e1af4da0767c5236a6de0, type: 3}
+  fruitArrangments: []
   icingShapes: []
   highScore: 0

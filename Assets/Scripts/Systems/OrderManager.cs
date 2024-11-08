@@ -54,7 +54,7 @@ public class OrderManager : Singleton<OrderManager>
     {
         RandomizeDesert();
         orderCam.enabled = false;
-    } 
+    }
 
     public void RandomizeDesert()
     {
@@ -77,6 +77,7 @@ public class OrderManager : Singleton<OrderManager>
     public void SubmitDesert(D_Cake input)
     {
         int score = Compare(currentOrder, input);
+        SoundFXManager.Get().PlaySound(compareData.Sound(score));
         LevelManager.Get().AddScore(score);
         Destroy(currentOrder.gameObject);
         RandomizeDesert();
@@ -99,6 +100,13 @@ public class OrderManager : Singleton<OrderManager>
         public float minIcingSimilarity;
         public float maxIcingSimilarity;
         public int maxIcingValue;
+
+        public int minValueForSound;
+
+        public RandomizedAudio goodSound;
+        public RandomizedAudio badSound;
+
+        public AudioClip Sound(int score) => score > minValueForSound ? goodSound : badSound;
     }
 
     public int Compare(D_Cake orderCake, D_Cake playerCake)

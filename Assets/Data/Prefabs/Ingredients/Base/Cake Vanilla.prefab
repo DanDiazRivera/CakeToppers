@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   signature: Vanilla
   placeAnimation: {fileID: 7400000, guid: aa101fdacfbbb7f48b6d9ca861c92ce5, type: 2}
-  placeAudio: {fileID: 8300000, guid: 3a4f22e641b7a56439453aabf9bb5945, type: 3}
+  placeAudio: {fileID: 8300000, guid: 0c7943340d38df9478bdb6db2af7e0e1, type: 3}
 --- !u!1001 &563623873998727151
 PrefabInstance:
   m_ObjectHideFlags: 0

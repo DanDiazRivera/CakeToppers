@@ -103,8 +103,8 @@ public class OrderManager : Singleton<OrderManager>
 
         public int minValueForSound;
 
-        public RandomizedAudio goodSound;
-        public RandomizedAudio badSound;
+        public SoundFXManager.RandomizedAudio goodSound;
+        public SoundFXManager.RandomizedAudio badSound;
 
         public AudioClip Sound(int score) => score > minValueForSound ? goodSound : badSound;
     }

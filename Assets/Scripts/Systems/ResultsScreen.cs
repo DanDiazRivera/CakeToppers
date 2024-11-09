@@ -15,10 +15,10 @@ public class ResultsScreen : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI scoreText;
     [SerializeField] RectTransform[] points;
 
-    [SerializeField] RandomizedAudio cookie0Audio;
-    [SerializeField] RandomizedAudio cookie1Audio;
-    [SerializeField] RandomizedAudio cookie2Audio;
-    [SerializeField] RandomizedAudio cookie3Audio;
+    [SerializeField] SoundFXManager.RandomizedAudio cookie0Audio;
+    [SerializeField] SoundFXManager.RandomizedAudio cookie1Audio;
+    [SerializeField] SoundFXManager.RandomizedAudio cookie2Audio;
+    [SerializeField] SoundFXManager.RandomizedAudio cookie3Audio;
 
 
     private AudioSource audioSource;

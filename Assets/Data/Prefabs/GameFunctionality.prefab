@@ -2386,7 +2386,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 30}
+  m_SizeDelta: {x: 0, y: 64.6658}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7731723909944865605
 CanvasRenderer:
@@ -5405,6 +5405,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundFXObject: {fileID: 5288882227098476068, guid: 41b30b3cc3c93b8469da04361d813866,
     type: 3}
+  doorNoise: {fileID: 0}
+  soundPos: {x: 0, y: 0, z: 0}
   doRandomAmbience: 1
   delayTime: {x: 4, y: 100}
   randomSounds:
@@ -5413,6 +5415,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: ad641efd99797dc47aa9734645c06033, type: 3}
     - {fileID: 8300000, guid: 50d6fe2ed97ea5c4bae4d5d942ed549c, type: 3}
     - {fileID: 8300000, guid: 1c8a27c5f7651d64a8c0b4336cba49d7, type: 3}
+    - {fileID: 8300000, guid: 862b744da39044341b363784ca9cd9a3, type: 3}
 --- !u!82 &7688643408816981786
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5634,7 +5637,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 30}
+  m_SizeDelta: {x: 0, y: 64.6658}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7109296019982505268
 CanvasRenderer:

@@ -1,25 +1,31 @@
+using EditorAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
-public class SoundFXManager : MonoBehaviour
+public class SoundFXManager : Singleton<SoundFXManager>
 {
-    public static SoundFXManager instance;
 
     [SerializeField] private AudioSource soundFXObject;
     [SerializeField] private AudioClip doorNoise;
     [SerializeField] private Vector3 soundPos;
 
-    private void Awake()
+    private AudioSource selfSource;
+
+    protected override void OnAwake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        selfSource = GetComponent<AudioSource>();
+        if (doRandomAmbience) randomSoundCoroutine = StartCoroutine(RandomSoundsIE());
     }
-    public void PlaySoundFXClip(AudioClip clip, Vector3 position, float volume)
+
+    protected override void OnDestroyed()
+    {
+        StopCoroutine(randomSoundCoroutine);
+    }
+
+    public void PlaySoundFXClip(AudioClip clip, Vector3 position, float volume = 1)
     {
         AudioSource audioSource = Instantiate(soundFXObject, position, Quaternion.identity);
         audioSource.clip = clip;
@@ -28,7 +34,6 @@ public class SoundFXManager : MonoBehaviour
         float clipLength = audioSource.clip.length;
         Destroy(audioSource.gameObject, clipLength);
     }
-
     public void PlayDoorNoise()
     {
         StartCoroutine(doorNoiseWait());
@@ -42,5 +47,32 @@ public class SoundFXManager : MonoBehaviour
         audioSource.Play();
         float clipLength = audioSource.clip.length;
         Destroy(audioSource.gameObject, clipLength);
+    }
+    [SerializeField, ToggleGroup("Random Sounds", nameof(delayTime), nameof(randomSounds))] bool doRandomAmbience;
+    [SerializeField, HideInInspector] Vector2 delayTime;
+    [SerializeField, HideProperty] RandomizedAudio randomSounds;
+
+    private Coroutine randomSoundCoroutine;
+
+    private IEnumerator RandomSoundsIE()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(delayTime.x, delayTime.y));
+            selfSource.PlayOneShot(randomSounds);
+        }
+    }
+
+    public void PlaySound(AudioClip clip, float volume = 1)
+    {
+        if (!selfSource) selfSource = GetComponent<AudioSource>();
+        selfSource.PlayOneShot(clip, volume);
+    }
+
+    [System.Serializable]
+    public class RandomizedAudio
+    {
+        public AudioClip[] clips;
+        public static implicit operator AudioClip(RandomizedAudio S) => S.clips[Random.Range(0, S.clips.Length)];
     }
 }

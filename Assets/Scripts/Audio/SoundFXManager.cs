@@ -3,14 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class SoundFXManager : Singleton<SoundFXManager>
 {
 
     [SerializeField] private AudioSource soundFXObject;
+    [SerializeField] private AudioClip doorNoise;
+    [SerializeField] private Vector3 soundPos;
 
     private AudioSource selfSource;
-    
+
     protected override void OnAwake()
     {
         selfSource = GetComponent<AudioSource>();
@@ -31,7 +34,20 @@ public class SoundFXManager : Singleton<SoundFXManager>
         float clipLength = audioSource.clip.length;
         Destroy(audioSource.gameObject, clipLength);
     }
+    public void PlayDoorNoise()
+    {
+        StartCoroutine(doorNoiseWait());
+    }
 
+    IEnumerator doorNoiseWait()
+    {
+        yield return new WaitForSeconds(2);
+        AudioSource audioSource = Instantiate(soundFXObject, soundPos, Quaternion.identity);
+        audioSource.clip = doorNoise;
+        audioSource.Play();
+        float clipLength = audioSource.clip.length;
+        Destroy(audioSource.gameObject, clipLength);
+    }
     [SerializeField, ToggleGroup("Random Sounds", nameof(delayTime), nameof(randomSounds))] bool doRandomAmbience;
     [SerializeField, HideInInspector] Vector2 delayTime;
     [SerializeField, HideProperty] RandomizedAudio randomSounds;
@@ -49,18 +65,14 @@ public class SoundFXManager : Singleton<SoundFXManager>
 
     public void PlaySound(AudioClip clip, float volume = 1)
     {
-        if(!selfSource) selfSource = GetComponent<AudioSource>();
+        if (!selfSource) selfSource = GetComponent<AudioSource>();
         selfSource.PlayOneShot(clip, volume);
-    } 
+    }
 
-
-
-
-}
-
-[System.Serializable]
-public class RandomizedAudio
-{
-    public AudioClip[] clips;
-    public static implicit operator AudioClip(RandomizedAudio S) => S.clips[Random.Range(0, S.clips.Length)];
+    [System.Serializable]
+    public class RandomizedAudio
+    {
+        public AudioClip[] clips;
+        public static implicit operator AudioClip(RandomizedAudio S) => S.clips[Random.Range(0, S.clips.Length)];
+    }
 }

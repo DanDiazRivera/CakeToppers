@@ -15,11 +15,20 @@ public class ResultsScreen : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI scoreText;
     [SerializeField] RectTransform[] points;
 
+    [SerializeField] RandomizedAudio cookie0Audio;
+    [SerializeField] RandomizedAudio cookie1Audio;
+    [SerializeField] RandomizedAudio cookie2Audio;
+    [SerializeField] RandomizedAudio cookie3Audio;
+
+
+    private AudioSource audioSource;
+
     private void Awake()
     {
         var manager = GameMainManager.Get();
         int newScore = manager.pointsTransfer;
         LevelData level = manager.levelData;
+        audioSource = GetComponent<AudioSource>();
 
         if (level.highScore < newScore) level.highScore = newScore;
         if (manager.AllLevels.Contains(manager.levelData)) manager.saveData.Save();
@@ -43,6 +52,7 @@ public class ResultsScreen : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         int scoreCounter = 0;
+        int cookieCounter = 0;
         int maxScore = level.cookie3Score;
 
         while (scoreCounter < score && scoreCounter < maxScore)
@@ -50,21 +60,29 @@ public class ResultsScreen : MonoBehaviour
             yield return null;
             scoreCounter++;
 
-            if (scoreCounter == level.minScore) ShowCookie(0);
-            if (scoreCounter == level.cookie2Score) ShowCookie(1);
-            if (scoreCounter == level.cookie3Score) ShowCookie(2);
+            if (scoreCounter == level.minScore) ShowCookie(++cookieCounter);
+            if (scoreCounter == level.cookie2Score) ShowCookie(++cookieCounter);
+            if (scoreCounter == level.cookie3Score) ShowCookie(++cookieCounter);
 
             progress.value = (float)scoreCounter / (float)maxScore;
             scoreText.text = scoreCounter.ToString();
         }
         scoreText.text = score.ToString();
 
+        audioSource.PlayOneShot(cookieCounter switch
+            {
+                3 => cookie3Audio,
+                2 => cookie2Audio,
+                1 => cookie1Audio,
+                _ => cookie0Audio
+            });
+
         yield return new WaitForSeconds(0.5f);
 
         buttons.SetActive(true);
     }
 
-    void ShowCookie(int i) => cookies[i].SetActive(true);
+    void ShowCookie(int i) => cookies[i-1].SetActive(true);
 
     public void LoadScene(string value) => SceneManager.LoadScene(value);
 
@@ -79,4 +97,6 @@ public class ResultsScreen : MonoBehaviour
                 break;
             }
     }
+
+
 }

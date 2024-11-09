@@ -15,9 +15,6 @@ public class LevelManager : Singleton<LevelManager>
     #endregion
     #region Components
 
-    [SerializeField] GameObject levelEndCanvas;
-    [SerializeField] GameObject winDialogue;
-    [SerializeField] GameObject loseDialogue;
     [SerializeField] GameObject pauseCanvas;
     [SerializeField] TextMP currentTimerText;
     [SerializeField] TextMP currentScoreText;

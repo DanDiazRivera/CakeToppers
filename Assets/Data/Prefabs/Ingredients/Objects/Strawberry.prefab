@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   signature: Strawberry
-  placeAnimation: {fileID: 0}
+  placeAnimation: {fileID: 7400000, guid: 619974c48529c80429a9dbf8eeaaa340, type: 2}
   placeAudio: {fileID: 8300000, guid: 0c7943340d38df9478bdb6db2af7e0e1, type: 3}
 --- !u!135 &4693295263571555165
 SphereCollider:
@@ -157,7 +157,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: cd8ee5ca40957af4e96280b9ef542d76,
         type: 3}
       propertyPath: m_Name
-      value: strawberryStem
+      value: Model
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

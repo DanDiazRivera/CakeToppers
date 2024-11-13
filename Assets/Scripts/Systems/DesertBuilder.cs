@@ -11,7 +11,7 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	#region Config
 	public LayerMask stationLayerMask;
 	public RuntimeAnimatorController ingredientPlaceController;
-
+	//public Animator bellAnim;
 
 	#endregion
 	#region Components
@@ -46,7 +46,9 @@ public class DesertBuilder : Singleton<DesertBuilder>
 		if (cake == null) return;
 		OrderManager.Get().SubmitDesert(cake);
 		ClearCurrentDesert();
-	}
+		//bellAnim.Play("Ring");
+
+    }
 
 	public void ClearCurrentDesert()
 	{

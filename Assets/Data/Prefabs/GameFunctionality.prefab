@@ -5648,20 +5648,15 @@ MonoBehaviour:
     fruitArrangmentOptions: []
     icingOptions: []
     icingShapes: []
-  compareData:
+  comp:
     noCakeNegative: -20
-    wrongCake: 5
-    rightCake: 50
-    wrongFrost: 10
-    rightFrost: 50
-    vagueFruit: 10
-    nearFruit: 25
-    perfectFruit: 25
-    minIcingValue: 5
+    cakeValue: 50
+    frostingValue: 50
+    totalFruitValue: 50
     minIcingSimilarity: 0.3
     maxIcingSimilarity: 0.8
     maxIcingValue: 50
-    minValueForSound: 110
+    minRatioForSound: 0.6
     goodSound:
       clips:
       - {fileID: 8300000, guid: f3a8b9bc6f4b33140be5a966f0dd2878, type: 3}

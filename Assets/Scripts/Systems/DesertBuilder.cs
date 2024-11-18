@@ -11,7 +11,8 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	#region Config
 	public LayerMask stationLayerMask;
 	public RuntimeAnimatorController ingredientPlaceController;
-	//public Animator bellAnim;
+	public UnityEngine.UI.Button submitButton;
+	public float submitCooldown;
 
 	#endregion
 	#region Components
@@ -28,6 +29,7 @@ public class DesertBuilder : Singleton<DesertBuilder>
 	private Ingredient activeModeIngredient;
 	private IngredientButton activeModeIngredientButton;
     public new Camera camera;
+	private float submitCooldownTimer;
 
     #endregion
 
@@ -43,11 +45,11 @@ public class DesertBuilder : Singleton<DesertBuilder>
 
 	public void SubmitDesert()
 	{
-		if (cake == null) return;
+		if (cake == null || submitCooldownTimer > 0) return;
 		OrderManager.Get().SubmitDesert(cake);
 		ClearCurrentDesert();
-		//bellAnim.Play("Ring");
-
+		submitCooldownTimer = submitCooldown;
+		submitButton.interactable = false;
     }
 
 	public void ClearCurrentDesert()
@@ -162,6 +164,15 @@ public class DesertBuilder : Singleton<DesertBuilder>
 
     private void Update()
     {
+		if(submitCooldownTimer > 0)
+		{
+			submitCooldownTimer -= Time.deltaTime;
+			if(submitCooldownTimer <= 0)
+			{
+				submitButton.interactable = true;
+			}
+		}
+
         if (Input.Press.IsPressed() && mode == 2 && GetMousePosition(out Ray screenRay))
         {
             castHits = Physics.RaycastAll(screenRay, 1000f);

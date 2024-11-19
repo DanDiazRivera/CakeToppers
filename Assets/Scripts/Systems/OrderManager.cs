@@ -160,6 +160,7 @@ public class OrderManager : Singleton<OrderManager>
 
         } // Fruit
 
+        if(orderCake.icings.Count > 0)
         {
             // Note, currently only 1 flavor of icing will generate, hence the assumption of 1.
 

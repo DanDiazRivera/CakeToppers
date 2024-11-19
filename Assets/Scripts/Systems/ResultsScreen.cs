@@ -19,6 +19,7 @@ public class ResultsScreen : MonoBehaviour
     [SerializeField] SoundFXManager.RandomizedAudio cookie2Audio;
     [SerializeField] SoundFXManager.RandomizedAudio cookie3Audio;
 
+    [SerializeField] Animator animator;
 
     private AudioSource audioSource;
 
@@ -75,6 +76,15 @@ public class ResultsScreen : MonoBehaviour
                 1 => cookie1Audio,
                 _ => cookie0Audio
             });
+        
+        animator.gameObject.SetActive(true);
+        animator.Play(cookieCounter switch
+        {
+            3 => "C3",
+            2 => "C2",
+            1 => "C1",
+            _ => "Fail"
+        });
 
         yield return new WaitForSeconds(0.5f);
 

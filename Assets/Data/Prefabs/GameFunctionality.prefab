@@ -1759,6 +1759,8 @@ MonoBehaviour:
     m_Bits: 1
   ingredientPlaceController: {fileID: 22100000, guid: a7964790fb2faa94f88566a20d04c01c,
     type: 2}
+  submitButton: {fileID: 7575774680381465968}
+  submitCooldown: 1
   camera: {fileID: 3343078216039188095}
 --- !u!82 &1726196572508873610
 AudioSource:
@@ -2025,7 +2027,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.35
+  m_fontSize: 21.3
   m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4750,7 +4752,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 4953005653983423154}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.99999726
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

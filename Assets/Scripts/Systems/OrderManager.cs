@@ -108,7 +108,11 @@ public class OrderManager : Singleton<OrderManager>
 
     public int Compare(D_Cake orderCake, D_Cake playerCake)
     {
-        if (playerCake.cakeBase is null) return comp.noCakeNegative;
+        if (playerCake.cakeBase is null)
+        {
+            SoundFXManager.Get().PlaySound(comp.badSound);
+            return comp.noCakeNegative;
+        }
         int finalScore = 0;
 
         {

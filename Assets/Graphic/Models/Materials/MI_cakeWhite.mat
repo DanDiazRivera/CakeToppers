@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MI_cakeStrawberry
+  m_Name: MI_cakeWhite
   m_Shader: {fileID: -6465566751694194690, guid: db13a7a8c1bd4d3459d2649bf904475c,
     type: 3}
   m_Parent: {fileID: 0}
@@ -151,7 +151,7 @@ Material:
     - _maxBrightness: 1.25
     - _minBrightness: 0.3
     - _normalIntensity: 0.2
-    - _roughnessIntensity: 5
+    - _roughnessIntensity: 1
     - _shaderBias: 0.06
     - _shades: 0.49
     - _test: 0.43
@@ -163,6 +163,6 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _colorMultiply: {r: 0.9843137, g: 0.4745098, b: 0.4745098, a: 1}
+    - _colorMultiply: {r: 1, g: 1, b: 1, a: 1}
     - _colorOverlay: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []

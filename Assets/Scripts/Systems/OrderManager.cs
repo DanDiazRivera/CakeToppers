@@ -170,11 +170,12 @@ public class OrderManager : Singleton<OrderManager>
 
             Ing_FrostingDraw orderIcing = orderCake.icings[0];
 
-            Ing_FrostingDraw playerIcing = playerCake.icings.FirstOrDefault(check => Ingredient.Compare(check, orderIcing));
-            playerIcing ??= playerCake.icings[0];
-
-            if (playerIcing) finalScore += CompareIcing(orderIcing, playerIcing);
-
+            if(playerCake.icings.Count > 0)
+            {
+                Ing_FrostingDraw playerIcing = playerCake.icings.FirstOrDefault(check => Ingredient.Compare(check, orderIcing));
+                if (playerIcing != null) finalScore += CompareIcing(orderIcing, playerIcing);
+                else finalScore += CompareIcing(orderIcing, playerCake.icings[0]) / 2;
+            }
         } // Icing
 
         int possibleScore = 

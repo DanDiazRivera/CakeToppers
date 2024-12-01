@@ -8,6 +8,8 @@ public class IngredientButton : MonoBehaviour, IPointerClickHandler, IPointerDow
 {
 
 	public Ingredient ingredient;
+
+	public Image highlight;
 	//public bool onlyDrag;
 
 	Input input;
@@ -109,12 +111,6 @@ public class IngredientButton : MonoBehaviour, IPointerClickHandler, IPointerDow
 	}
 
 
-	public void BeginActiveMode()
-	{
-
-	}
-	public void EndActiveMode()
-	{
-
-	}
+    public void BeginActiveMode() => highlight.enabled = true;
+    public void EndActiveMode() => highlight.enabled = false;
 }
